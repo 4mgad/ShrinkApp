@@ -1,0 +1,1 @@
+ShrinkApp is a build utility for html5 applications.
