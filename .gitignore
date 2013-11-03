@@ -1,12 +1,5 @@
+_*/
+build/
 /node/
 /node_modules/
-/tests/test-All.cmd
-/tests/test.cmd
-/tests/_app/
-/tests/filters/_js/
-/tests/filters/_css/
-/tests/filters/_less/
-/tests/filters/_html/
-/tests/filters/test.cmd
-/tests/utils/test.cmd
-/tests/filters/build/
+*.cmd
