@@ -1,35 +1,36 @@
 {
-    "name": "shrinkapp",
-    "version": "0.0.1",
-    "description": "ShrinkApp is a build utility for html5 applications.",
-    "homepage": "http://amgad.us/shrinkapp",
-    "author": "Amgad Youssef <ay@amgad.us>",
-    "contributors": [
-    ],
-    "main": "ShrinkApp.js",
-    "bin": {
-        "shrinkapp": "./bin/shrinkapp"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/4mgad/ShrinkApp.git"
-    },
-    "bugs": {
-        "url": "https://github.com/4mgad/ShrinkApp/issues"
-    },
-    "keywords": ["shrinkapp", "package", "html5", "util", "utility"],
-    "dependencies": {
-        "htmlparser2": "~3.3.0",
-        "js-beautify": "~1.4.1",
-        "less": "~1.5.0",
-        "yuicompressor": "~2.4.8",
-        "closurecompiler": "~1.1.4"
-    },
-    "engines": {
-        "node": ">=0.6"
-    },
-    "preferGlobal": true,
-    "scripts": {
-        "test": "node tests/test-ShrinkApp.js"
-    }
+  "name": "shrinkapp",
+  "version": "0.0.1",
+  "description": "ShrinkApp is a build utility for html5 applications.",
+  "homepage": "http://amgad.us/shrinkapp",
+  "author": "Amgad Youssef <ay@amgad.us>",
+  "contributors": [
+  ],
+  "main": "ShrinkApp.js",
+  "bin": {
+    "shrinkapp": "./bin/shrinkapp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/4mgad/ShrinkApp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/4mgad/ShrinkApp/issues"
+  },
+  "keywords": ["shrinkapp", "package", "html5", "util", "utility"],
+  "dependencies": {
+    "extendfs": "~1.0.0",
+    "htmlparser2": "~3.3.0",
+    "js-beautify": "~1.4.1",
+    "less": "~1.5.0",
+    "yuicompressor": "~2.4.8",
+    "closurecompiler": "~1.1.4"
+  },
+  "engines": {
+    "node": ">=0.6"
+  },
+  "preferGlobal": true,
+  "scripts": {
+    "test": "node tests/test-ShrinkApp.js"
+  }
 }

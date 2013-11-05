@@ -14,8 +14,8 @@ var testCase1 = function() {
         fs.writeFileSync('css/test-case-1.css', cssTxt);
         return;
       }
-      var validCssTxt = fs.readFileSync('css/test-case-1.css');
-      if (cssTxt == validCssTxt) {
+      var validCssTxt = fs.readFileSync('css/test-case-1.css', 'utf8');
+      if (cssTxt === validCssTxt) {
         console.log('SUCCESS!');
         testCase2();
       } else {
@@ -40,8 +40,8 @@ var testCase2 = function() {
         fs.writeFileSync('css/test-case-2.css', cssTxt);
         return;
       }
-      var validCssTxt = fs.readFileSync('css/test-case-2.css');
-      if (cssTxt == validCssTxt) {
+      var validCssTxt = fs.readFileSync('css/test-case-2.css', 'utf8');
+      if (cssTxt === validCssTxt) {
         console.log('SUCCESS!');
         testCase3();
       } else {
@@ -63,8 +63,8 @@ var testCase3 = function() {
         fs.writeFileSync('css/test-case-3.css', cssTxt);
         return;
       }
-      var validCssTxt = fs.readFileSync('css/test-case-3.css');
-      if (cssTxt == validCssTxt) {
+      var validCssTxt = fs.readFileSync('css/test-case-3.css', 'utf8');
+      if (cssTxt === validCssTxt) {
         console.log('SUCCESS!');
         testCase4();
       } else {
@@ -90,8 +90,8 @@ var testCase4 = function() {
         fs.writeFileSync('css/test-case-4.css', cssTxt);
         return;
       }
-      var validCssTxt = fs.readFileSync('css/test-case-4.css');
-      if (cssTxt == validCssTxt) {
+      var validCssTxt = fs.readFileSync('css/test-case-4.css', 'utf8');
+      if (cssTxt === validCssTxt) {
         console.log('SUCCESS!');
         testCase5();
       } else {
@@ -113,8 +113,8 @@ var testCase5 = function() {
         fs.writeFileSync('js/test-case-5.js', jsTxt);
         return;
       }
-      var validJSTxt = fs.readFileSync('js/test-case-5.js');
-      if (jsTxt == validJSTxt) {
+      var validJSTxt = fs.readFileSync('js/test-case-5.js', 'utf8');
+      if (jsTxt === validJSTxt) {
         console.log('SUCCESS!');
         testCase6();
       } else {
@@ -142,82 +142,13 @@ var testCase6 = function() {
         fs.writeFileSync('js/test-case-6.js', jsTxt);
         return;
       }
-      var validJSTxt = fs.readFileSync('js/test-case-6.js');
-      if (jsTxt == validJSTxt) {
+      var validJSTxt = fs.readFileSync('js/test-case-6.js', 'utf8');
+      if (jsTxt === validJSTxt) {
         console.log('SUCCESS!');
-        testCase7();
       } else {
         console.log("jsTxt: " + jsTxt);
         console.log("validCssTxt: " + validJSTxt);
         console.log('FAILED');
-      }
-    }
-  });
-};
-
-var testCase7 = function() {
-  console.log('Test Case #7');
-  Utils.copyFile('css/styles.css', 'css/_styles.css', function(err) {
-    if (err) {
-      console.log(err);
-    } else {
-      if (fs.existsSync('css/_styles.css')) {
-        fs.unlinkSync('css/_styles.css');
-        console.log('SUCCESS!');
-        testCase8();
-      } else {
-        console.log('FAILED');
-      }
-    }
-  });
-};
-
-var testCase8 = function() {
-  console.log('Test Case #8');
-  var numOfCopiedFiles = 0;
-  Utils.copyDir('js', '_js', function(err, sf, df) {
-    if (err) {
-      console.log(err);
-    } else {
-      //console.log(sf + " copied to " + df);
-      numOfCopiedFiles++;
-    }
-  }, function(err, sd, dd) {
-    if (err) {
-      console.log(err);
-    } else {
-      //console.log(sd + " dir copied to " + dd);
-      if (dd === "_js") {
-        if (fs.existsSync('_js') && numOfCopiedFiles == 11) {
-          console.log('SUCCESS!');
-          testCase9();
-        } else {
-          console.log('FAILED');
-        }
-      }
-    }
-  });
-};
-
-var testCase9 = function() {
-  console.log('Test Case #9');
-  var numOfDeletedFiles = 0;
-  Utils.deleteDir('_js', function(err, filePath) {
-    if (err) {
-      console.log(err);
-    } else {
-      numOfDeletedFiles++;
-    }
-  }, function(err, dirPath) {
-    if (err) {
-      console.log(err);
-    } else {
-      if (dirPath == "_js") {
-        if (!fs.existsSync('_js') && numOfDeletedFiles == 11) {
-          console.log('SUCCESS!');
-        } else {
-          console.log('FAILED');
-        }
       }
     }
   });
