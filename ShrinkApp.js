@@ -16,10 +16,10 @@
     "css-rel-path": "css",
     "js-rel-path": "js",
     "filters": {
-      "html": "ParseHTML.js",
-      "htm": "ParseHTML.js",
-      "xhtml": "ParseHTML.js",
-      "less": "CompileLESS.js",
+      "html": "ParseHTML",
+      "htm": "ParseHTML",
+      "xhtml": "ParseHTML",
+      "less": "CompileLESS",
       "css": "ShrinkCSS",
       "js": "ShrinkJS"
     },

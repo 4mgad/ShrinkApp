@@ -10,21 +10,21 @@ var outPath = appConf["output-path"];
 
 var parseHTML = new ParseHTML.getInstance(appConf);
 
-Utils.deleteDir('_html', null, function(err, dir) {
+Utils.deleteDir('build', null, function(err, dir) {
   if (err) {
     console.log(err);
   }
-  if (dir === '_html' || err) {
-    Utils.copyDir('html', '_html', null, function(err, src, dest) {
+  if (dir === 'build' || err) {
+    Utils.copyDir('app', 'build', null, function(err, src, dest) {
       if (err) {
         console.log(err);
       } else {
-        if (dest === '_html') {
+        if (dest === 'build') {
 
 
 
           var testCase1 = function() {
-            parseHTML.applyFilter('_html/index.html', function() {
+            parseHTML.applyFilter('build/index_3.html', function(err, htmlArr) {
               console.log(arguments);
             });
           }();
