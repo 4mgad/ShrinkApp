@@ -15,13 +15,22 @@
     "output-path": "build",
     "css-rel-path": "css",
     "js-rel-path": "js",
+    "chain": {
+      "filters1": {
+        "html": "ParseHTML",
+        "htm": "ParseHTML",
+        "xhtml": "ParseHTML",
+        "less": "CompileLESS"
+      },
+      "filters2": {
+        "html": "ParseHTML",
+        "htm": "ParseHTML",
+        "xhtml": "ParseHTML",
+        "css": "ShrinkCSS",
+        "js": "ShrinkJS"
+      }
+    },
     "filters": {
-      "html": "ParseHTML",
-      "htm": "ParseHTML",
-      "xhtml": "ParseHTML",
-      "less": "CompileLESS",
-      "css": "ShrinkCSS",
-      "js": "ShrinkJS"
     },
     "js-beautify-conf": {
       indent_size: 2,

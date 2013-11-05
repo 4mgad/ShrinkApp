@@ -24,8 +24,17 @@ Utils.deleteDir('build', null, function(err, dir) {
 
 
           var testCase1 = function() {
+            appConf.filters = appConf.chain['filters1'];
             parseHTML.applyFilter('build/index_3.html', function(err, htmlArr) {
-              console.log(arguments);
+              if (err) {
+                console.log(err);
+              } else {
+                console.log(htmlArr);
+                appConf.filters = appConf.chain['filters2'];
+                parseHTML.applyFilter(htmlArr, function(err, htmlArr) {
+                  console.log(htmlArr);
+                });
+              }
             });
           }();
 
