@@ -1,14 +1,13 @@
 console.log('Testing ShrinkApp.js');
 
-var fs = require("fs");
+var fs = require("extendfs");
 var ShrinkApp = require("../ShrinkApp.js");
-var Utils = require("../lib/Utils.js");
 
-Utils.deleteDir('_app', null, function(err) {
+fs.deleteDir('build', function(err, dir) {
   if (err) {
     console.log(err);
   }
-  Utils.copyDir('app', '_app', null, function(err) {
+  fs.copyDir('app', 'build', function(err, src, dest) {
     if (err) {
       console.log(err);
     } else {
@@ -17,7 +16,7 @@ Utils.deleteDir('_app', null, function(err) {
       var testCase1 = function() {
         console.log("no test cases to execute yet");
       }();
-      
+
 
     }
   });

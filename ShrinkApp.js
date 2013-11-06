@@ -17,6 +17,7 @@
     "js-rel-path": "js",
     "min-css-ext": ".min.css",
     "min-js-ext": ".min.js",
+    "remove": ['lib/less/less-1.5.0.min.js'],
     "filter-chain": {
       "htm": "ParseHTML",
       "html": "ParseHTML",
@@ -30,7 +31,6 @@
         "js": "ShrinkJS"
       }
     },
-    "remove": ['lib/less/less-1.5.0.min.js'],
     "js-beautify-conf": {
       indent_size: 2,
       preserve_newlines: false,
