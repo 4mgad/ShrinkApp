@@ -1,12 +1,10 @@
 console.log('Testing ParseHTML.js');
 
 var fs = require("extendfs");
-var ShrinkApp = require("../../ShrinkApp.js");
+var Config = require("../../lib/Config.js");
 var ParseHTML = require("../../lib/filters/ParseHTML.js");
 
-var appConf = new ShrinkApp().appConf;
-var outPath = appConf["output-path"];
-
+var appConf = new Config();
 var parseHTML = new ParseHTML.getInstance(appConf);
 
 fs.deleteDir('build', function(err, dir) {
@@ -67,13 +65,25 @@ fs.deleteDir('build', function(err, dir) {
           if (err) {
             console.log(err);
           } else {
-            var HTMLTxt = fs.readFileSync('build/index_2.html', 'utf8');
-            var validHTMLTxt = fs.readFileSync('build/test-case-3.html', 'utf8');
-            if (htmlArr.length === 4 && HTMLTxt === validHTMLTxt) {
-              console.log('SUCCESS!');
-            } else {
-              console.log('FAILED');
+            var HTMLTxt1 = fs.readFileSync('build/index.html', 'utf8');
+            var validHTMLTxt1 = fs.readFileSync('build/test-case-3-1.html', 'utf8');
+            var HTMLTxt2 = fs.readFileSync('build/index_1.html', 'utf8');
+            var validHTMLTxt2 = fs.readFileSync('build/test-case-3-2.html', 'utf8');
+            var HTMLTxt3 = fs.readFileSync('build/index_2.html', 'utf8');
+            var validHTMLTxt3 = fs.readFileSync('build/test-case-3-3.html', 'utf8');
+            var HTMLTxt4 = fs.readFileSync('build/index_3.html', 'utf8');
+            var validHTMLTxt4 = fs.readFileSync('build/test-case-3-4.html', 'utf8');
+            if (HTMLTxt1 === validHTMLTxt1) {
+              if (HTMLTxt2 === validHTMLTxt2) {
+                if (HTMLTxt3 === validHTMLTxt3) {
+                  if (htmlArr.length === 4) {
+                    console.log('SUCCESS!');
+                    return;
+                  }
+                }
+              }
             }
+            console.log('FAILED');
           }
         });
       };

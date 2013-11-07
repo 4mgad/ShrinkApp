@@ -1,13 +1,13 @@
 console.log('Testing ShrinkCSS.js');
 
 var fs = require("extendfs");
-var ShrinkApp = require("../../ShrinkApp.js");
+var Config = require("../../lib/Config.js");
+
 var ShrinkCSS = require("../../lib/filters/ShrinkCSS.js");
 
-var appConf = new ShrinkApp().appConf;
-var outPath = appConf["output-path"];
-
+var appConf = new Config();
 var shrinkCSS = new ShrinkCSS.getInstance(appConf);
+var outPath = appConf.get("output-path");
 
 fs.deleteDir('build', function(err, dir) {
   if (err) {

@@ -1,11 +1,10 @@
 console.log('Testing CompileLESS.js');
 
 var fs = require("extendfs");
-var ShrinkApp = require("../../ShrinkApp.js");
+var Config = require("../../lib/Config.js");
 var CompileLESS = require("../../lib/filters/CompileLESS.js");
 
-var appConf = new ShrinkApp().appConf;
-
+var appConf = new Config();
 var compileLESS = new CompileLESS.getInstance(appConf);
 
 fs.deleteDir('build', function(err, dir) {
