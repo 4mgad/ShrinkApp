@@ -4,6 +4,7 @@
   }
 
   var fs = require('extendfs');
+  var path = require('path');
   var Config = require("./lib/Config.js");
   var delegate = require("./lib/Utils.js").delegate;
 
@@ -12,51 +13,65 @@
   };
 
   ShrinkApp.prototype.applyFilters = function(callback) {
+    var appConf = this.appConf;
     var fileMap = this.fileMap || {};
-    var cnt = Object.keys(fileMap).length;
-    for (var ext in fileMap) {
-      var fileArr = fileMap[ext];
-      this.currFilters = this.appConf.get('filters');
-      var fltrs = this.currFilters;
-      if (fltrs[ext]) {
-        var fltr = this.appConf.getFilter(ext);
-        console.log("applying " + fltr + " filter on " + fileArr);
-        fltr.applyFilter(fileArr, function(err, arr) {
-          if (err) {
-            callback(err);
-          }
-          cnt--;
-          if (cnt <= 0) {
-            callback(null, arr);
-          }
-        });
-      }
+    var keys = Object.keys(fileMap);
+    if (!keys.length) {
+      callback();
+    } else {
+      var idx = 0;
+      var errArr = [];
+      var procFileArr = [];
+      var applyFilter = function() {
+        var ext = keys[idx];
+        var fileArr = fileMap[ext];
+        if (appConf.filterDepth(ext) === 0) {
+          var fltr = appConf.getFilter(ext);
+          fltr.applyFilter(fileArr, function(err, arr) {
+            if (err) {
+              errArr.push(err);
+            } else {
+              procFileArr.push.apply(procFileArr, arr);
+            }
+            if (idx >= (keys.length - 1)) {
+              callback(errArr.length ? errArr : null, procFileArr);
+            } else {
+              idx++;
+              applyFilter();
+            }
+          });
+        }
+      };
+      applyFilter();
     }
   };
 
   ShrinkApp.prototype.finalize = function(callback) {
-    var fltrMap = this.filterMap;
-    var cnt = Object.keys(fltrMap).length;
-    if (cnt > 0) {
-      var errArr = [];
-      for (var key in fltrMap) {
-        fltrMap[key].finalize(function(err) {
-          cnt--;
+    var filterObjects = this.appConf.getFilterObjects();
+    var errArr = [];
+    if (filterObjects.length) {
+      filterObjects.forEach(function(fObj, idx) {
+        fObj.finalize(function(err) {
           if (err) {
             errArr.push(err);
           }
-          if (cnt <= 0) {
+          if (idx >= (filterObjects.length - 1)) {
             callback(errArr.length ? errArr : null);
           }
         });
-      }
+      });
     } else {
       callback();
     }
   };
 
   ShrinkApp.prototype.shrink = function(dirPath, onShrink) {
-    var outPath = this.appConf.get("output-path");
+    var appConf = this.appConf;
+    var outDir = path.dirname(dirPath);
+    var outPath = outDir + '/' + appConf.get("output-path");
+    appConf.config({
+      "output-path": outPath
+    });
     fs.deleteDir(outPath, delegate(this, function(err, deletedDir) {
       if (err) {
         onShrink(err);
@@ -65,16 +80,24 @@
         if (err) {
           onShrink(err);
         } else {
-          this.applyFilters(function(err, arr) {
-            console.log(arguments);
-          });
-          //this.finalize(onShrink);
+          this.applyFilters(delegate(this, function(err, arr) {
+            if (err) {
+              onShrink(err);
+            } else {
+              this.finalize(function(err) {
+                if (err) {
+                  onShrink(err);
+                } else {
+                  onShrink(null, arr);
+                }
+              });
+            }
+          }));
         }
       }), null, delegate(this, function(err, srcFile, destFile) {
         this.fileMap = this.fileMap || {};
-        var fltrs = this.appConf.get('filters');
         var ext = fs.getExtension(destFile);
-        if (fltrs[ext]) {
+        if (appConf.filterDepth(ext) === 0) {
           this.fileMap[ext] = this.fileMap[ext] || [];
           this.fileMap[ext].push(destFile);
         }
