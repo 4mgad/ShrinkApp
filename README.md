@@ -13,19 +13,20 @@ ShrinkApp is a build utility for HTML5 applications.
 Tested On
 ----------
 
-1. AngularJS's seed application (https://github.com/angular/angular-seed)
+- [x] AngularJS's seed application (https://github.com/angular/angular-seed)
 
 
 Future Enhancements
 ---------------------
 
-1. Add support for UglifyJS (https://github.com/mishoo/UglifyJS2)
-2. Add support for sass (http://sass-lang.com/)
-3. Test on the following
-..* Bootstrap template from initializr.com
-..* Classic template from initializr.com
-..* Responsive template from initializr.com
-..* Bootstrap template from initializr.com
-..* HTML5 Boilerplate template from html5boilerplate.com. Version: 4.2.0
-..* Mobile Boilerplate template from html5boilerplate.com/mobile. Version: 4.1
-..* Twitter Bootstrap template from getbootstrap.com/2.3.2
+1. [ ] Add support for UglifyJS (https://github.com/mishoo/UglifyJS2)
+2. [ ] Add support for sass (http://sass-lang.com/)
+3. [ ] Test on the following:
+
+- [ ] Bootstrap template from initializr.com
+- [ ] Classic template from initializr.com
+- [ ] Responsive template from initializr.com
+- [ ] Bootstrap template from initializr.com
+- [ ] HTML5 Boilerplate template from html5boilerplate.com. Version: 4.2.0
+- [ ] Mobile Boilerplate template from html5boilerplate.com/mobile. Version: 4.1
+- [ ] Twitter Bootstrap template from getbootstrap.com/2.3.2
