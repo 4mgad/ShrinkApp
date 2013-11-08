@@ -1,0 +1,8 @@
+/* C:\projects\ShrinkApp\tests/build/css/styles_1.less.css */
+.menu_1{list-style:none;border-bottom:.1em solid black;margin-bottom:2em;padding:0 0 .5em}.menu_1:before{content:"["}.menu_1:after{content:"]"}.menu_1>li{display:inline}.menu_1>li:before{content:"|";padding-right:.3em}.menu_1>li:nth-child(1):before{content:"";padding:0}
+/* C:\projects\ShrinkApp\tests/build/css/styles.less.css */
+.menu{list-style:none;border-bottom:.1em solid black;margin-bottom:2em;padding:0 0 .5em}.menu:before{content:"["}.menu:after{content:"]"}.menu>li{display:inline}.menu>li:before{content:"|";padding-right:.3em}.menu>li:nth-child(1):before{content:"";padding:0}
+/* C:\projects\ShrinkApp\tests/build/css/styles_2.css */
+.menu_2{list-style:none;border-bottom:.1em solid black;margin-bottom:2em;padding:0 0 .5em}.menu_2:before{content:"["}.menu_2:after{content:"]"}.menu_2>li{display:inline}.menu_2>li:before{content:"|";padding-right:.3em}.menu_2>li:nth-child(1):before{content:"";padding:0}
+/* C:\projects\ShrinkApp\tests/build/css/styles_3.css */
+.menu_3{list-style:none;border-bottom:.1em solid black;margin-bottom:2em;padding:0 0 .5em}.menu_3:before{content:"["}.menu_3:after{content:"]"}.menu_3>li{display:inline}.menu_3>li:before{content:"|";padding-right:.3em}.menu_3>li:nth-child(1):before{content:"";padding:0}

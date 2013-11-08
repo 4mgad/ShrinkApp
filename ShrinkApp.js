@@ -3,113 +3,103 @@
     throw(new Error("ShrinkApp.js can only be used within node.js"));
   }
 
-  var fs = require('fs');
-  var Utils = require("./lib/Utils.js");
+  var fs = require('extendfs');
+  var path = require('path');
+  var Config = require("./lib/Config.js");
   var delegate = require("./lib/Utils.js").delegate;
 
-  var ShrinkApp = function() {
+  var ShrinkApp = function(conf) {
+    this.appConf = conf || new Config();
   };
 
-  ShrinkApp.prototype.appConf = {
-    "app-name": "app",
-    "output-path": "build",
-    "css-rel-path": "css",
-    "js-rel-path": "js",
-    "min-css-ext": ".min.css",
-    "min-js-ext": ".min.js",
-    "remove": ['lib/less/less-1.5.0.min.js'],
-    "filter-chain": {
-      "htm": "ParseHTML",
-      "html": "ParseHTML",
-      "xhtml": "ParseHTML",
-      "less": "CompileLESS",
-      "__next__": {
-        "htm": "ParseHTML",
-        "html": "ParseHTML",
-        "xhtml": "ParseHTML",
-        "css": "ShrinkCSS",
-        "js": "ShrinkJS"
-      }
-    },
-    "js-beautify-conf": {
-      indent_size: 2,
-      preserve_newlines: false,
-      max_preserve_newlines: 1
-    },
-    "less-conf": {
-    },
-    "yuicompressor-conf": {
-      charset: 'utf8',
-      type: 'css'
-    },
-    "closurecompiler-conf": {
-    }
-  };
-
-  ShrinkApp.prototype.config = function(conf) {
-    if (typeof conf === 'string') {
-      return this.appConf[conf];
-    } else if (typeof conf === 'object') {
-      try {
-        Object.keys(conf);
-      } catch (e) {
-        conf = {};
-      }
-      for (var key in conf) {
-        this.appConf[key] = conf[key];
-      }
-    }
-  };
-
-  ShrinkApp.prototype.applyFilters = function(path) {
-    var applyFilter = function(fltr) {
-      try {
-        if (!fltr.filterObj) {
-          fltr.filterObj = require(__dirname + "/lib/" + fltr.filter).getInstance(this.appConf);
+  ShrinkApp.prototype.applyFilters = function(callback) {
+    var appConf = this.appConf;
+    var fileMap = this.fileMap || {};
+    var keys = Object.keys(fileMap);
+    if (!keys.length) {
+      callback();
+    } else {
+      var idx = 0;
+      var errArr = [];
+      var procFileArr = [];
+      var applyFilter = function() {
+        var ext = keys[idx];
+        var fileArr = fileMap[ext];
+        if (appConf.filterDepth(ext) === 0) {
+          var fltr = appConf.getFilter(ext);
+          fltr.applyFilter(fileArr, function(err, arr) {
+            if (err) {
+              errArr.push(err);
+            } else {
+              procFileArr.push.apply(procFileArr, arr);
+            }
+            if (idx >= (keys.length - 1)) {
+              callback(errArr.length ? errArr : null, procFileArr);
+            } else {
+              idx++;
+              applyFilter();
+            }
+          });
         }
-        fltr.filterObj.applyFilter(path);
-      } catch (err) {
-        console.log(err);
+      };
+      applyFilter();
+    }
+  };
+
+  ShrinkApp.prototype.finalize = function(callback) {
+    var filterObjects = this.appConf.getFilterObjects();
+    var errArr = [];
+    if (filterObjects.length) {
+      filterObjects.forEach(function(fObj, idx) {
+        fObj.finalize(function(err) {
+          if (err) {
+            errArr.push(err);
+          }
+          if (idx >= (filterObjects.length - 1)) {
+            callback(errArr.length ? errArr : null);
+          }
+        });
+      });
+    } else {
+      callback();
+    }
+  };
+
+  ShrinkApp.prototype.shrink = function(dirPath, onShrink) {
+    var appConf = this.appConf;
+    var outDir = path.dirname(dirPath);
+    var outPath = outDir + '/' + appConf.get("output-path");
+    appConf.config({
+      "output-path": outPath
+    });
+    fs.deleteDir(outPath, delegate(this, function(err, deletedDir) {
+      if (err) {
+        onShrink(err);
       }
-    };
-    var fltrs = this.config("filters");
-    if (fltrs && fltrs.length) {
-      fltrs.forEach(delegate(this, function(fltr) {
-        if (Array.isArray(fltr.extension)) {
-          var extensions = fltr.extension;
-          extensions.forEach(delegate(this, function(ext) {
-            if (path.match("\." + ext + "$", "i")) {
-              delegate(this, applyFilter)(fltr);
+      fs.copyDir(dirPath, outPath, delegate(this, function(err, srcDir, destDir) {
+        if (err) {
+          onShrink(err);
+        } else {
+          this.applyFilters(delegate(this, function(err, arr) {
+            if (err) {
+              onShrink(err);
+            } else {
+              this.finalize(function(err) {
+                if (err) {
+                  onShrink(err);
+                } else {
+                  onShrink(null, arr);
+                }
+              });
             }
           }));
-        } else if (typeof fltr.extension === 'string') {
-          if (path.match("\." + fltr.extension + "$", "i")) {
-            delegate(this, applyFilter)(fltr);
-          }
         }
-      }));
-    }
-  };
-
-  ShrinkApp.prototype.finalize = function() {
-    var fltrs = this.config("filters");
-    if (fltrs && fltrs.length) {
-      fltrs.forEach(function(fltr) {
-        if (fltr.filterObj) {
-          fltr.filterObj.finalize();
-        }
-      });
-    }
-  };
-
-  ShrinkApp.prototype.shrink = function(path) {
-    var outPath = this.config("output-path");
-    Utils.deleteDir(outPath, null, delegate(this, function(err) {
-      Utils.copyDir(path, outPath, null, delegate(this, function(err) {
-        if (err) {
-          console.log(err);
-        } else {
-          this.finalize();
+      }), null, delegate(this, function(err, srcFile, destFile) {
+        this.fileMap = this.fileMap || {};
+        var ext = fs.getExtension(destFile);
+        if (appConf.filterDepth(ext) === 0) {
+          this.fileMap[ext] = this.fileMap[ext] || [];
+          this.fileMap[ext].push(destFile);
         }
       }));
     }));
@@ -119,13 +109,12 @@
     return "ShrinkApp";
   };
 
-  ShrinkApp.shrink = function(path) {
-    var appConf = path + '/app.json';
-    var shrinkApp = new ShrinkApp();
-    if (fs.existsSync(appConf)) {
-      shrinkApp.config(JSON.parse(fs.readFileSync(appConf, 'utf8')));
-    }
-    shrinkApp.shrink(path);
+  ShrinkApp.shrink = function(dirPath, onShrink) {
+    onShrink = onShrink || function() {
+    };
+    var appConf = dirPath + '/app.json';
+    var shrinkApp = new ShrinkApp(new Config(appConf));
+    shrinkApp.shrink(dirPath, onShrink);
   };
 
   module["exports"] = ShrinkApp;

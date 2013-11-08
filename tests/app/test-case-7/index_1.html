@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+
+<head>
+  <meta charset="utf-8" />
+  <title>My AngularJS App</title>
+  <link rel="stylesheet" type="text/css" href="css/myApp_0.min.css" />
+
+</head>
+
+<body>
+  <ul class="menu">
+    <li><a href="#/view1">view1</a>
+    </li>
+    <li><a href="#/view2">view2</a>
+    </li>
+  </ul>
+
+  <div ng-view=""></div>
+
+  <div>Angular seed app: v<span app-version=""></span>
+  </div>
+
+  <script src="lib/angular/angular.min.js"></script>
+  <script src="lib/angular/angular-route.min.js"></script>
+  <script src="js/myApp_0.min.js"></script>
+
+</body>
+
+</html>
