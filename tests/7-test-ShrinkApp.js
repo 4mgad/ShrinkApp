@@ -7,6 +7,7 @@ var ShrinkApp = require("../ShrinkApp.js");
 
 var appConf = new Config(__dirname + '/app/app.json');
 var appName = appConf.get("app-name");
+var buildDir = appConf.get("output-path");
 
 var testCase1 = function() {
   ShrinkApp.shrink(__dirname + '/app', function(err, arr) {
@@ -16,7 +17,7 @@ var testCase1 = function() {
       var fail = false;
       arr.forEach(function(file) {
         if (file.indexOf('test-case-7') === -1) {
-          var buildPath = __dirname + '/build';
+          var buildPath = __dirname + '/' + buildDir;
           var validFile = buildPath + '/test-case-7' + file.substring(buildPath.length);
           var htmlTxt = fs.readFileSync(file, 'utf8');
           var validHtmlTxt = fs.readFileSync(validFile, 'utf8');
