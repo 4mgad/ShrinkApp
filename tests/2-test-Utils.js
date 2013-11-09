@@ -130,7 +130,7 @@ var TestSuite = {
             console.log('FAILED');
           }
         }
-      });
+      }, {}, true);
     };
 
     var testCase6 = function() {
@@ -147,9 +147,64 @@ var TestSuite = {
         } else {
           if (generateFiles) {
             fs.writeFileSync(__dirname + '/app/js/test-case-2-6.js', jsTxt);
+            testCase7();
             return;
           }
           var validJSTxt = fs.readFileSync(__dirname + '/app/js/test-case-2-6.js', 'utf8');
+          if (jsTxt === validJSTxt) {
+            console.log('SUCCESS!');
+            testCase7();
+          } else {
+            console.log("jsTxt: " + jsTxt);
+            console.log("validCssTxt: " + validJSTxt);
+            console.log('FAILED');
+          }
+        }
+      }, {}, true);
+    };
+
+    var testCase7 = function() {
+      console.log('Test Case #7');
+      Utils.shrinkJS(__dirname + '/app/js/app.js', function(err, jsTxt) {
+        if (err) {
+          console.log(err);
+        } else {
+          if (generateFiles) {
+            fs.writeFileSync(__dirname + '/app/js/test-case-2-7.js', jsTxt);
+            testCase8();
+            return;
+          }
+          var validJSTxt = fs.readFileSync(__dirname + '/app/js/test-case-2-7.js', 'utf8');
+          if (jsTxt === validJSTxt) {
+            console.log('SUCCESS!');
+            testCase8();
+          } else {
+            console.log("jsTxt: " + jsTxt);
+            console.log("validCssTxt: " + validJSTxt);
+            console.log('FAILED');
+          }
+        }
+      });
+    };
+
+    var testCase8 = function() {
+      console.log('Test Case #8');
+      Utils.shrinkJS([
+        __dirname + '/app/js/app.js',
+        __dirname + '/app/js/controllers.js',
+        __dirname + '/app/js/directives.js',
+        __dirname + '/app/js/filters.js',
+        __dirname + '/app/js/services.js'
+      ], function(err, jsTxt) {
+        if (err) {
+          console.log(err);
+        } else {
+          if (generateFiles) {
+            fs.writeFileSync(__dirname + '/app/js/test-case-2-8.js', jsTxt);
+            callback();
+            return;
+          }
+          var validJSTxt = fs.readFileSync(__dirname + '/app/js/test-case-2-8.js', 'utf8');
           if (jsTxt === validJSTxt) {
             console.log('SUCCESS!');
             callback();
@@ -161,6 +216,9 @@ var TestSuite = {
         }
       });
     };
+
+
+
   }
 };
 module["exports"] = TestSuite;

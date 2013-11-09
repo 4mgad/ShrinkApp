@@ -12,6 +12,7 @@ var TestSuite = {
     appConf.config({
       "output-path": __dirname + '/' + outPath
     });
+    var compileJS = appConf.get("compile-js");
 
     fs.deleteDir(__dirname + '/build', function(err, dir) {
       if (err) {
@@ -25,18 +26,22 @@ var TestSuite = {
 
 
           var testCase1 = function() {
+            var validJsTxt = fs.readFileSync(__dirname + '/build/js/test-case-5-1.js', 'utf8');
+            if (compileJS) {
+              validJsTxt = fs.readFileSync(__dirname + '/build/js/test-case-5-3.js', 'utf8');
+            }
             shrinkJS.applyFilter(__dirname + '/build/js/app.js', function(err, minJSFiles) {
               console.log('Test Case #1');
               if (err) {
                 console.log(err);
               } else {
                 var jsTxt = fs.readFileSync(minJSFiles[0], 'utf8');
-                var validJsTxt = fs.readFileSync(__dirname + '/build/js/test-case-5-1.js', 'utf8');
 
                 if (jsTxt === validJsTxt) {
                   console.log('SUCCESS!');
                   testCase2();
                 } else {
+                  console.log(minJSFiles[0]);
                   console.log('FAILED');
                 }
               }
@@ -44,8 +49,9 @@ var TestSuite = {
           }();
 
           var testCase2 = function() {
-            if (!fs.existsSync(outPath)) {
-              fs.mkdirSync(outPath);
+            var validJsTxt = fs.readFileSync(__dirname + '/build/js/test-case-5-2.js', 'utf8');
+            if (compileJS) {
+              validJsTxt = fs.readFileSync(__dirname + '/build/js/test-case-5-4.js', 'utf8');
             }
             shrinkJS.applyFilter([
               __dirname + '/build/js/app.js',
@@ -59,12 +65,12 @@ var TestSuite = {
                 console.log(err);
               } else {
                 var jsTxt = fs.readFileSync(minJSFiles[0], 'utf8');
-                var validJsTxt = fs.readFileSync(__dirname + '/build/js/test-case-5-2.js', 'utf8');
 
                 if (jsTxt === validJsTxt) {
                   console.log('SUCCESS!');
                   testCase3();
                 } else {
+                  console.log(minJSFiles[0]);
                   console.log('FAILED');
                 }
               }
