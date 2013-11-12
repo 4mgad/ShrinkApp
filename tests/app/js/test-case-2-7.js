@@ -1,1 +1,0 @@
-"use strict";angular.module("myApp",["ngRoute","myApp.filters","myApp.services","myApp.directives","myApp.controllers"]).config(["$routeProvider",function(e){e.when("/view1",{templateUrl:"partials/partial1.html",controller:"MyCtrl1"}),e.when("/view2",{templateUrl:"partials/partial2.html",controller:"MyCtrl2"}),e.otherwise({redirectTo:"/view1"})}]);

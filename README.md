@@ -7,7 +7,6 @@ Features
 2. [x] Compiles less files using less compiler (https://github.com/less/less.js)
 3. [ ] Compiles sass (http://sass-lang.com/)
 4. [x] Shrinks css files using yuicompressor (https://github.com/yui/yuicompressor/)
-5. [x] Shrinks js files using closure compiler (https://github.com/dcodeIO/ClosureCompiler.js)
 6. [x] Shrinks js files using UglifyJS (https://github.com/mishoo/UglifyJS2)
 7. [x] Modifies tags pointing to less/css and js files to point to the minified ones
 8. [x] Produces a build directory containing the shrunk application
