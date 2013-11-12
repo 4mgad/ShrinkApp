@@ -39,7 +39,6 @@ var TestSuite = {
 
                 if (jsTxt === validJsTxt) {
                   console.log('SUCCESS!');
-                  testCase2();
                 } else {
                   console.log(minJSFiles[0]);
                   console.log('FAILED');
@@ -68,14 +67,13 @@ var TestSuite = {
 
                 if (jsTxt === validJsTxt) {
                   console.log('SUCCESS!');
-                  testCase3();
                 } else {
                   console.log(minJSFiles[0]);
                   console.log('FAILED');
                 }
               }
             });
-          };
+          }();
 
 
           var testCase3 = function() {
@@ -99,7 +97,7 @@ var TestSuite = {
                 }
               }
             });
-          };
+          }();
 
 
 

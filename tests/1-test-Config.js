@@ -75,7 +75,87 @@ var TestSuite = {
       }
     }();
 
-    callback();
+    var testCase8 = function() {
+      console.log('Test Case #8');
+      var c = new Config();
+      c.createJSFile("sample js text 1", function(err, jsFilePath) {
+        if (err) {
+          console.log(err);
+        } else {
+          if (jsFilePath === 'build/js/app_0.min.js') {
+            console.log('SUCCESS!');
+            return;
+          }
+        }
+        console.log('FAILED');
+      });
+    }();
+
+    var testCase9 = function() {
+      console.log('Test Case #9');
+      var c = new Config();
+      c.createJSFile("sample js text 1", function(err, jsFilePath1) {
+        if (err) {
+          console.log(err);
+        } else {
+          c.createJSFile("sample js text 1", function(err, jsFilePath2) {
+            if (err) {
+              console.log(err);
+            } else {
+              if (jsFilePath2 === 'build/js/app_0.min.js') {
+                console.log('SUCCESS!');
+                return;
+              }
+            }
+            console.log('FAILED');
+          });
+          return;
+        }
+        console.log('FAILED');
+      });
+    }();
+
+    var testCase10 = function() {
+      console.log('Test Case #10');
+      var c = new Config();
+      c.createCSSFile("sample css text 1", function(err, cssFilePath) {
+        if (err) {
+          console.log(err);
+        } else {
+          if (cssFilePath === 'build/css/app_0.min.css') {
+            console.log('SUCCESS!');
+            return;
+          }
+        }
+        console.log('FAILED');
+      });
+    }();
+
+    var testCase11 = function() {
+      console.log('Test Case #11');
+      var c = new Config();
+      c.createCSSFile("sample css text 1", function(err, cssFilePath1) {
+        if (err) {
+          console.log(err);
+        } else {
+          c.createCSSFile("sample css text 1", function(err, cssFilePath2) {
+            if (err) {
+              console.log(err);
+            } else {
+              if (cssFilePath2 === 'build/css/app_0.min.css') {
+                console.log('SUCCESS!');
+                callback();
+                return;
+              }
+            }
+            console.log('FAILED');
+          });
+          return;
+        }
+        console.log('FAILED');
+      });
+    }();
+
   }
 };
 module["exports"] = TestSuite;
