@@ -1,5 +1,6 @@
 ShrinkApp is a build utility for HTML5 applications (preferably single page applications). The goal is to produce a production ready HTML5 application with minified/complied css and js files along with the relevant HTML markup changes.
 
+
 Features
 ---------
 
@@ -23,3 +24,41 @@ Tested On
 - [ ] HTML5 Boilerplate template from html5boilerplate.com. Version: 4.2.0
 - [ ] Mobile Boilerplate template from html5boilerplate.com/mobile. Version: 4.1
 - [ ] Twitter Bootstrap template from getbootstrap.com/2.3.2
+
+
+Install
+-------
+
+First make sure you have installed the latest version of [node.js](http://nodejs.org/)
+(You may need to restart your computer after this step).
+
+From NPM for use as a command line app:
+
+    npm install shrinkapp -g
+
+From NPM for programmatic use:
+
+    npm install shrinkapp
+
+From Git:
+
+    git clone git://github.com/4mgad/ShrinkApp.git
+    cd ShrinkApp
+    npm link .
+
+
+Usage
+-----
+
+    shrinkapp [source directory] [options]
+
+The available options are:
+
+```
+  -c, --create-app [app-name]
+        Create a default app.json under the specified directory whose name is [app-name].
+
+  -fc, --force [app-name]
+        If app.json already exists overwrite it.
+
+```

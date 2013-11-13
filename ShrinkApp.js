@@ -88,7 +88,7 @@
                 if (err) {
                   onShrink(err);
                 } else {
-                  onShrink(null, arr);
+                  onShrink(null, arr, outPath);
                 }
               });
             }

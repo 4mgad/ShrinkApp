@@ -1,0 +1,113 @@
+var fs = require('fs');
+var path = require('path');
+var ShrinkApp = require(__dirname + '/../ShrinkApp.js');
+
+var args = process.argv.slice(2);
+var force = false;
+var dirPath = '';
+var switchHandlers = [];
+
+var processSwitches = function() {
+  switchHandlers.forEach(function(switchHandler) {
+    switchHandler.handler.apply(this, switchHandler.args);
+  });
+};
+
+var createAppJson = function(appName) {
+  appName = appName || 'app';
+  var appConfig = dirPath + '/app.json';
+  if (force || !fs.existsSync(appConfig)) {
+    fs.writeFileSync(appConfig, '{"app-name": "' + appName + '"}');
+    console.log(appConfig + ' was created successfully');
+  } else {
+    console.log(appConfig + ' already exists');
+  }
+  process.exit(0);
+};
+
+//process command switches
+var skipNext = false;
+args.forEach(function(arg, idx) {
+  if (skipNext) {
+    skipNext = false;
+  } else {
+    if (arg) {
+      if (arg.charAt(0) === '-') {
+        switch (arg) {
+          case '-f':
+          case '--force':
+            force = true;
+            break;
+          case '-c':
+          case '--create-app':
+            var nextArg = args[idx + 1];
+            if (nextArg.charAt(0) === '-') {
+              console.log('Please specify app name');
+              process.exit(0);
+            }
+            skipNext = true;
+            switchHandlers.push({
+              handler: createAppJson,
+              args: [nextArg]
+            });
+            break;
+        }
+      } else {
+        if (!dirPath) {
+          dirPath = arg;
+        } else {
+          console.log('Please specify only one directory to shrink');
+          process.exit(0);
+        }
+      }
+    }
+  }
+});
+
+//app directory path argument should always be at the end
+if (!dirPath) {
+  dirPath = fs.realpathSync('.');
+}
+
+processSwitches();
+
+//start the shrink process
+if (fs.existsSync(dirPath)) {
+  var appConfig = dirPath + '/app.json';
+  if (fs.existsSync(appConfig)) {
+    ShrinkApp.shrink(dirPath, function(err, fileArr, buildDir) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('');
+        console.log('The following directory has been generated successfully!');
+        console.log('');
+        console.log('  --> ' + buildDir);
+        console.log('');
+        console.log('');
+        console.log('The following files have been modified:');
+        console.log('');
+        if (fileArr && fileArr.length) {
+          fileArr.forEach(function(fileName) {
+            console.log('  ---> ' + fileName);
+          });
+        } else {
+          console.log('  NONE');
+        }
+      }
+    });
+  } else {
+    console.log(appConfig + ' file is missing. Please create one with the following sample content and re-run the command:');
+    console.log('');
+    console.log('{"app-name": "app"}');
+    console.log('');
+    console.log('Please refer to https://github.com/4mgad/ShrinkApp/wiki for more information on app.json configuration attributes.');
+    console.log('');
+    console.log('');
+    console.log('OR run the following command:');
+    console.log('');
+    console.log('shinkapp -create-app ' + dirPath);
+  }
+} else {
+  console.log(dirPath + ' does not exist');
+}
