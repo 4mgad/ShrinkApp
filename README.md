@@ -6,10 +6,10 @@ Features
 
 1. [x] Looks for html files and parses them to find script and link tags
 2. [x] Compiles less files using less compiler (https://github.com/less/less.js)
-3. [ ] Compiles sass (http://sass-lang.com/)
+3. [ ] Compiles sass files (http://sass-lang.com/)
 4. [x] Shrinks css files using yuicompressor (https://github.com/yui/yuicompressor/)
-6. [x] Shrinks js files using UglifyJS (https://github.com/mishoo/UglifyJS2)
-7. [x] Modifies tags pointing to less/css and js files to point to the minified ones
+6. [x] Shrinks javascript files using UglifyJS (https://github.com/mishoo/UglifyJS2)
+7. [x] Modifies HTML tags pointing to less/css and/or javascript files to point to the minified ones instead
 8. [x] Produces a build directory containing the shrunk application
 
 
@@ -56,9 +56,9 @@ The available options are:
 
 ```
   -c, --create-app [app-name]
-        Create a default app.json under the specified directory whose name is [app-name].
+        Create a default app.json under the specified source directory.
 
-  -fc, --force [app-name]
+  -f, --force [app-name]
         If app.json already exists overwrite it.
 
 ```
