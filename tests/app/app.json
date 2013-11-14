@@ -1,6 +1,5 @@
 {
   "app-name": "myApp",
-  "remove": ["less\\-[0-9]\\.[0-9]\\.[0-9]\\.min\\.js$"],
   "output-path": "build",
   "css-rel-path": "css",
   "js-rel-path": "js"

@@ -18,13 +18,13 @@ Tested On
 ----------
 
 - [x] AngularJS's seed application (https://github.com/angular/angular-seed)
-- [ ] Bootstrap template from initializr.com
-- [ ] Classic template from initializr.com
-- [ ] Responsive template from initializr.com
-- [ ] Bootstrap template from initializr.com
-- [ ] HTML5 Boilerplate template from html5boilerplate.com. Version: 4.2.0
-- [ ] Mobile Boilerplate template from html5boilerplate.com/mobile. Version: 4.1
-- [ ] Twitter Bootstrap template from getbootstrap.com/2.3.2
+- [x] Bootstrap template from initializr.com
+- [x] Classic template from initializr.com
+- [x] Responsive template from initializr.com
+- [x] Bootstrap template from initializr.com
+- [x] HTML5 Boilerplate template from html5boilerplate.com. Version: 4.2.0
+- [x] Mobile Boilerplate template from html5boilerplate.com/mobile. Version: 4.1
+- [x] Twitter Bootstrap template from getbootstrap.com/2.3.2
 
 
 Install

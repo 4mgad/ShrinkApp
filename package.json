@@ -1,11 +1,12 @@
 {
   "name": "shrinkapp",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "ShrinkApp is a build utility for HTML5 applications (preferably single page applications). The goal is to produce a production ready HTML5 application with minified/complied css and js files along with the relevant HTML markup changes.",
   "homepage": "https://github.com/4mgad/ShrinkApp",
-  "author": "Amgad Youssef <ay@amgad.us>",
-  "contributors": [
-  ],
+  "author": {
+    "name": "Amgad Youssef",
+    "email": "ay@amgad.us"
+  },
   "main": "ShrinkApp.js",
   "bin": {
     "shrinkapp": "bin/shrinkapp"
