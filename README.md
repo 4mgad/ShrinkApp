@@ -1,4 +1,4 @@
-ShrinkApp is a build utility for HTML5 applications (preferably single page applications). The goal is to produce a production ready HTML5 application with minified/complied css and js files along with the relevant HTML markup changes.
+ShrinkApp is a build utility for HTML5 applications (preferably single page applications). The goal is to produce a production ready HTML5 application with minified css and js files along with the relevant HTML markup changes.
 
 
 Features
