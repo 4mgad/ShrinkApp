@@ -118,3 +118,4 @@ if (fs.existsSync(dirPath)) {
 } else {
   console.log(dirPath + ' does not exist');
 }
+
