@@ -62,4 +62,7 @@ The available options are:
   -f, --force [app-name]
         If app.json already exists overwrite it.
 
+  -v, --version
+        Display package version.
+
 ```
