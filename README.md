@@ -33,33 +33,49 @@ Install
 First make sure you have installed the latest version of [node.js](http://nodejs.org/)
 (You may need to restart your computer after this step).
 
-From NPM for use as a command line app:
+*From NPM for use as a command line app:*
 
-  On Windows:
+*_On Windows:_*
+
+```
     npm install shrinkapp@windows -g
+```
 
-  On Linux:
+*_On Linux:_*
+
+```
     npm install shrinkapp@linux -g
+```
 
-From NPM for programmatic use:
+*From NPM for programmatic use:*
 
-  On Windows:
+*_On Windows:_*
+
+```
     npm install shrinkapp@windows
+```
 
-  On Linux:
+*_On Linux:_*
+
+```
     npm install shrinkapp@linux
+```
 
 From Git:
 
+```
     git clone git://github.com/4mgad/ShrinkApp.git
     cd ShrinkApp
     npm link .
+```
 
 
 Usage
 -----
 
+```
     shrinkapp [source directory] [options]
+```
 
 The available options are:
 
