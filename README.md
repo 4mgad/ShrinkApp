@@ -35,11 +35,19 @@ First make sure you have installed the latest version of [node.js](http://nodejs
 
 From NPM for use as a command line app:
 
-    npm install shrinkapp -g
+  On Windows:
+    npm install shrinkapp@windows -g
+
+  On Linux:
+    npm install shrinkapp@linux -g
 
 From NPM for programmatic use:
 
-    npm install shrinkapp
+  On Windows:
+    npm install shrinkapp@windows
+
+  On Linux:
+    npm install shrinkapp@linux
 
 From Git:
 
