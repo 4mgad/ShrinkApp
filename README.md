@@ -33,29 +33,29 @@ Install
 First make sure you have installed the latest version of [node.js](http://nodejs.org/)
 (You may need to restart your computer after this step).
 
-*From NPM for use as a command line app:*
+### From NPM for use as a command line app:
 
-*_On Windows:_*
+*On Windows:*
 
 ```
     npm install shrinkapp@windows -g
 ```
 
-*_On Linux:_*
+*On Linux:*
 
 ```
     npm install shrinkapp@linux -g
 ```
 
-*From NPM for programmatic use:*
+### From NPM for programmatic use:
 
-*_On Windows:_*
+*On Windows:*
 
 ```
     npm install shrinkapp@windows
 ```
 
-*_On Linux:_*
+*On Linux:*
 
 ```
     npm install shrinkapp@linux
