@@ -38,7 +38,7 @@ First make sure you have installed the latest version of [node.js](http://nodejs
 *On Linux:*
 
 ```
-    npm install shrinkapp -g
+    npm install shrinkapp@linux -g
 ```
 
 *On Windows:*
@@ -52,7 +52,7 @@ First make sure you have installed the latest version of [node.js](http://nodejs
 *On Linux:*
 
 ```
-    npm install shrinkapp
+    npm install shrinkapp@linux
 ```
 
 *On Windows:*
