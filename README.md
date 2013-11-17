@@ -89,4 +89,7 @@ The available options are:
   -v, --version
         Display package version.
 
+  -h, --help
+        Display help.
+
 ```

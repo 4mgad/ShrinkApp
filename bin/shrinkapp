@@ -1,121 +1,196 @@
 #!/usr/bin/env node
 
 var fs = require('fs');
-var pkg = require(__dirname+"/../package.json");
+var readline = require('readline');
+var pkg = require(__dirname + "/../package.json");
+var Config = require(__dirname + '/../lib/Config.js');
 var ShrinkApp = require(__dirname + '/../ShrinkApp.js');
 
-var args = process.argv.slice(2);
-var force = false;
 var dirPath = '';
-var switchHandlers = [];
+var force = false;
 
-var processSwitches = function() {
-  switchHandlers.forEach(function(switchHandler) {
-    switchHandler.handler.apply(this, switchHandler.args);
-  });
+var shrinkApp = function() {
+  if (dirPath && fs.existsSync(dirPath)) {
+    //start the shrink process
+    var appConfig = dirPath + '/app.json';
+    if (fs.existsSync(appConfig)) {
+      ShrinkApp.shrink(dirPath, function(err, fileArr, buildDir) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('');
+          console.log('The following directory has been generated successfully!');
+          console.log('');
+          console.log('  --> ' + buildDir);
+          console.log('');
+          console.log('');
+          console.log('The following files have been modified:');
+          console.log('');
+          if (fileArr && fileArr.length) {
+            fileArr.forEach(function(fileName) {
+              console.log('  ---> ' + fileName);
+            });
+          } else {
+            console.log('  NONE');
+          }
+        }
+      });
+    } else {
+      console.log(appConfig + ' file is missing. Please create one with the following sample content and re-run the command:');
+      console.log('');
+      console.log('{"app-name": "app"}');
+      console.log('');
+      console.log('Please refer to https://github.com/4mgad/ShrinkApp/wiki for more information on app.json configuration attributes.');
+      console.log('');
+      console.log('');
+      console.log('OR run the following command:');
+      console.log('');
+      console.log('shinkapp -c ' + dirPath);
+    }
+  } else {
+    console.log(dirPath + ' does not exist');
+  }
 };
 
-var createAppJson = function(appName) {
-  appName = appName || 'app';
+var createAppConf = function(appConf, callback) {
+  appConf = appConf || {};
   var appConfig = dirPath + '/app.json';
   if (force || !fs.existsSync(appConfig)) {
-    fs.writeFileSync(appConfig, '{"app-name": "' + appName + '"}');
-    console.log(appConfig + ' was created successfully');
+    fs.writeFileSync(appConfig, JSON.stringify(appConf));
+    callback(appConfig + ' was created successfully');
   } else {
-    console.log(appConfig + ' already exists');
+    callback(appConfig + ' already exists');
   }
-  process.exit(0);
 };
 
-//process command switches
-var skipNext = false;
-args.forEach(function(arg, idx) {
-  if (skipNext) {
-    skipNext = false;
-  } else {
-    if (arg) {
-      if (arg.charAt(0) === '-') {
-        switch (arg) {
-          case '-v':
-          case '--version':
-            console.log(pkg.version);
-            process.exit(0);
-            break;
-          case '-f':
-          case '--force':
-            force = true;
-            break;
-          case '-c':
-          case '--create-app':
-            var nextArg = args[idx + 1];
-            if (nextArg.charAt(0) === '-') {
-              console.log('Please specify app name');
-              process.exit(0);
-            }
-            skipNext = true;
-            switchHandlers.push({
-              handler: createAppJson,
-              args: [nextArg]
-            });
-            break;
-        }
-      } else {
-        if (!dirPath) {
-          dirPath = arg;
+var parseSwitches = function(onParse) {
+  var switchHandlers = [];
+  var args = process.argv.slice(2);
+
+  //process command switches
+  var skipNext = false;
+  args.forEach(function(arg, idx) {
+    if (skipNext) {
+      skipNext = false;
+    } else {
+      if (arg) {
+        if (arg.charAt(0) === '-') {
+          switch (arg) {
+            case '-v':
+            case '--version':
+              switchHandlers.push({
+                handler: function(callback) {
+                  callback(pkg.version);
+                }
+              });
+              break;
+            case '-h':
+            case '--help':
+              switchHandlers.push({
+                handler: function(callback) {
+                  var help = 'Usage\n-----\n\n    shrinkapp [source directory] [options]\n\nThe available options are:\n\n  -c, --create-app [app-name]\n        Create a default app.json under the specified source directory.\n\n  -f, --force [app-name]\n        If app.json already exists overwrite it.\n\n  -v, --version\n        Display package version.\n\n  -h, --help\n        Display help.';
+                  callback(help);
+                }
+              });
+              break;
+            case '-f':
+            case '--force':
+              switchHandlers.push({
+                handler: function(callback) {
+                  force = true;
+                  callback(force);
+                }
+              });
+              break;
+            case '-c':
+            case '--create-app':
+              var nextArg = args[idx + 1];
+              if (!nextArg || nextArg.charAt(0) === '-') {
+                //no next argument or next argument is a switch
+                switchHandlers.push({
+                  handler: function(callback) {
+                    console.log('Please enter the following information :-');
+                    var appConf = {};
+                    var defaultAppConf = Config.getDefaultAppConf();
+                    var appConfHelp = Config.getAppConfHelp();
+                    var rl = readline.createInterface({
+                      input: process.stdin,
+                      output: process.stdout
+                    });
+                    var keys = Object.keys(appConfHelp);
+                    var idx = -1;
+                    var askNextQuestion = function() {
+                      idx++;
+                      var key = keys[idx];
+                      if (key) {
+                        var question = appConfHelp[key];
+                        var defValue = defaultAppConf[key];
+                        rl.question('- ' + question + ' (' + defValue + '?)' + ': ', function(answer) {
+                          appConf[key] = answer ? answer : defValue;
+                          askNextQuestion();
+                        });
+                      } else {
+                        rl.close();
+                        createAppConf(appConf, callback);
+                      }
+                    };
+                    askNextQuestion();
+                  }
+                });
+              } else if (nextArg && nextArg.charAt(0) !== '-') {
+                //next argument exists and it's not a switch
+                //assume that this argument is the application name
+                switchHandlers.push({
+                  handler: function(callback) {
+                    var appConf = {"app-name": nextArg};
+                    createAppConf(appConf, callback);
+                  }
+                });
+                skipNext = true;
+              }
+              break;
+          }
         } else {
-          console.log('Please specify only one directory to shrink');
-          process.exit(0);
+          if (!dirPath && fs.existsSync(arg)) {
+            dirPath = fs.realpathSync(arg);
+          } else {
+            switchHandlers.push({
+              handler: function(callback) {
+                callback('Please specify only one directory to shrink');
+              }
+            });
+          }
         }
       }
     }
+  });
+
+  if (!dirPath) {
+    dirPath = fs.realpathSync('.');
+  }
+
+  var idx = -1;
+  var shrink = true;
+  var applyHandler = function() {
+    idx++;
+    var switchHandler = switchHandlers[idx];
+    if (switchHandler) {
+      switchHandler.handler(function(err) {
+        if (err) {
+          shrink = false;
+          console.log(err);
+        }
+        applyHandler();
+      });
+    } else {
+      onParse(shrink);
+    }
+  };
+  applyHandler();
+};
+
+parseSwitches(function(shrink) {
+  if (shrink) {
+    shrinkApp();
   }
 });
-
-//app directory path argument should always be at the end
-if (!dirPath) {
-  dirPath = fs.realpathSync('.');
-}
-
-processSwitches();
-
-//start the shrink process
-if (fs.existsSync(dirPath)) {
-  var appConfig = dirPath + '/app.json';
-  if (fs.existsSync(appConfig)) {
-    ShrinkApp.shrink(dirPath, function(err, fileArr, buildDir) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('');
-        console.log('The following directory has been generated successfully!');
-        console.log('');
-        console.log('  --> ' + buildDir);
-        console.log('');
-        console.log('');
-        console.log('The following files have been modified:');
-        console.log('');
-        if (fileArr && fileArr.length) {
-          fileArr.forEach(function(fileName) {
-            console.log('  ---> ' + fileName);
-          });
-        } else {
-          console.log('  NONE');
-        }
-      }
-    });
-  } else {
-    console.log(appConfig + ' file is missing. Please create one with the following sample content and re-run the command:');
-    console.log('');
-    console.log('{"app-name": "app"}');
-    console.log('');
-    console.log('Please refer to https://github.com/4mgad/ShrinkApp/wiki for more information on app.json configuration attributes.');
-    console.log('');
-    console.log('');
-    console.log('OR run the following command:');
-    console.log('');
-    console.log('shinkapp -create-app ' + dirPath);
-  }
-} else {
-  console.log(dirPath + ' does not exist');
-}
-
