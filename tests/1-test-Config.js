@@ -23,6 +23,7 @@ var TestSuite = {
             && c.filterDepth('less') === 1
             && c.filterDepth('css') === 2
             && c.filterDepth('none') === -1
+            && c.getOutputPath(c.getBuildDir() + '/test/test.html') === (c.getOutputPath() + '/test/test.html')
             ) {
             console.log('SUCCESS!');
             callback();
@@ -38,7 +39,8 @@ var TestSuite = {
       var c = new Config();
       c.config({
         'force': true
-      }, function(err) {
+      },
+      function(err) {
         if (err) {
           console.log(err);
         } else {

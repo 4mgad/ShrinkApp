@@ -67,7 +67,6 @@
 
   ShrinkApp.prototype.shrink = function(dirPath, onShrink) {
     var appConf = this.appConf;
-    var outputPath = appConf.getOutputPath();
     var buildDir = appConf.getBuildDir();
     fs.deleteDir(buildDir, delegate(this, function(err, deletedDir) {
       if (err) {
@@ -89,7 +88,10 @@
                     if (err) {
                       onShrink(err);
                     } else {
-                      onShrink(null, arr, outputPath);
+                      arr.forEach(function(file, idx) {
+                        arr[idx] = appConf.getOutputPath(file);
+                      });
+                      onShrink(null, arr);
                     }
                   });
                 }
@@ -115,9 +117,16 @@
   ShrinkApp.shrink = function(dirPath, onShrink) {
     onShrink = onShrink || function() {
     };
-    var appConf = dirPath + '/app.json';
-    var shrinkApp = new ShrinkApp(new Config(appConf));
-    shrinkApp.shrink(dirPath, onShrink);
+    var appConfPath = dirPath + '/app.json';
+    var appConf = new Config();
+    appConf.config(appConfPath, function(err) {
+      if (err) {
+        onShrink(err);
+      } else {
+        var shrinkApp = new ShrinkApp(appConf);
+        shrinkApp.shrink(dirPath, onShrink);
+      }
+    });
   };
 
   module["exports"] = ShrinkApp;
