@@ -67,6 +67,7 @@
 
   ShrinkApp.prototype.shrink = function(dirPath, onShrink) {
     var appConf = this.appConf;
+    var outputPath = appConf.getOutputPath();
     var buildDir = appConf.getBuildDir();
     fs.deleteDir(buildDir, delegate(this, function(err, deletedDir) {
       if (err) {
@@ -91,7 +92,7 @@
                       arr.forEach(function(file, idx) {
                         arr[idx] = appConf.getOutputPath(file);
                       });
-                      onShrink(null, arr);
+                      onShrink(null, arr, outputPath);
                     }
                   });
                 }
@@ -114,12 +115,17 @@
     return "ShrinkApp";
   };
 
-  ShrinkApp.shrink = function(dirPath, onShrink) {
+  ShrinkApp.shrink = function(dirPath, overwrite, onShrink) {
     onShrink = onShrink || function() {
     };
     var appConfPath = dirPath + '/app.json';
     var appConf = new Config();
-    appConf.config(appConfPath, function(err) {
+    var conf = {};
+    if (fs.existsSync(appConfPath)) {
+      conf = JSON.parse(fs.readFileSync(appConfPath, 'utf8'));
+    }
+    conf["force"] = overwrite;
+    appConf.config(conf, function(err) {
       if (err) {
         onShrink(err);
       } else {

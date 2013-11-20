@@ -8,7 +8,7 @@ var TestSuite = {
     var testCase5 = function() {
       console.log('Test Case #5');
       var c = new Config();
-      c.config(__dirname + "/app/app.json", function(err) {
+      c.config(__dirname + "/app/app_1.json", function(err) {
         if (err) {
           console.log(err);
         } else {

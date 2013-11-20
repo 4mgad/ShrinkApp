@@ -14,14 +14,14 @@ var shrinkApp = function() {
     //start the shrink process
     var appConfig = dirPath + '/app.json';
     if (fs.existsSync(appConfig)) {
-      ShrinkApp.shrink(dirPath, function(err, fileArr, buildDir) {
+      ShrinkApp.shrink(dirPath, force, function(err, fileArr, outputPath) {
         if (err) {
           console.log(err);
         } else {
           console.log('');
           console.log('The following directory has been generated successfully!');
           console.log('');
-          console.log('  --> ' + buildDir);
+          console.log('  --> ' + outputPath);
           console.log('');
           console.log('');
           console.log('The following files have been modified:');
@@ -98,7 +98,7 @@ var parseSwitches = function(onParse) {
               switchHandlers.push({
                 handler: function(callback) {
                   force = true;
-                  callback(force);
+                  callback();
                 }
               });
               break;
@@ -142,7 +142,9 @@ var parseSwitches = function(onParse) {
                 //assume that this argument is the application name
                 switchHandlers.push({
                   handler: function(callback) {
-                    var appConf = {"app-name": nextArg};
+                    var appConf = {
+                      "app-name": nextArg
+                    };
                     createAppConf(appConf, callback);
                   }
                 });
