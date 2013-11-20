@@ -82,7 +82,7 @@ var TestSuite = {
         if (err) {
           console.log(err);
         } else {
-          if (jsFilePath === 'build/js/app_0.min.js') {
+          if (jsFilePath === c.getBuildDir() + '/js/app_0.min.js') {
             console.log('SUCCESS!');
             return;
           }
@@ -102,7 +102,7 @@ var TestSuite = {
             if (err) {
               console.log(err);
             } else {
-              if (jsFilePath2 === 'build/js/app_0.min.js') {
+              if (jsFilePath2 === c.getBuildDir() + '/js/app_0.min.js') {
                 console.log('SUCCESS!');
                 return;
               }
@@ -122,7 +122,7 @@ var TestSuite = {
         if (err) {
           console.log(err);
         } else {
-          if (cssFilePath === 'build/css/app_0.min.css') {
+          if (cssFilePath === c.getBuildDir() + '/css/app_0.min.css') {
             console.log('SUCCESS!');
             return;
           }

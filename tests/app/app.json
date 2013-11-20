@@ -1,6 +1,6 @@
 {
   "app-name": "myApp",
-  "output-path": "build",
+  "output-path": "../build",
   "css-rel-path": "css",
   "js-rel-path": "js"
 }
