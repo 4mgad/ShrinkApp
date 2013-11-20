@@ -6,6 +6,24 @@ var TestSuite = {
     var Utils = require("../lib/Utils.js");
 
     var generateFiles = false;
+
+    var testCase0 = function() {
+      console.log('Test Case #0');
+      if (Utils.isAbsolute('C:\\test\\test')
+        && !Utils.isAbsolute('test\\test')
+        && Utils.isAbsolute('/test/test')
+        && !Utils.isAbsolute('test/test')
+        && !Utils.isAbsolute('.\\test')
+        && !Utils.isAbsolute('./test')
+        && !Utils.isAbsolute('..\\test')
+        && !Utils.isAbsolute('../test')
+        ) {
+        console.log('SUCCESS!');
+      } else {
+        console.log('FAILED');
+      }
+    }();
+
     var testCase1 = function() {
       console.log('Test Case #1');
       Utils.less(__dirname + '/app/css/styles.less', function(err, cssTxt) {

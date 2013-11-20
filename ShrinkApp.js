@@ -7,6 +7,7 @@
   var path = require('path');
   var Config = require("./lib/Config.js");
   var delegate = require("./lib/Utils.js").delegate;
+  var isAbsolute = require("./lib/Utils.js").isAbsolute;
 
   var ShrinkApp = function(conf) {
     this.appConf = conf || new Config();
@@ -125,6 +126,9 @@
       conf = JSON.parse(fs.readFileSync(appConfPath, 'utf8'));
     }
     conf["force"] = overwrite;
+    if (!isAbsolute(dirPath)) {
+      conf["output-path"] = path.normalize(dirPath + '/' + conf["output-path"]);
+    }
     appConf.config(conf, function(err) {
       if (err) {
         onShrink(err);
