@@ -5,41 +5,46 @@ var TestSuite = {
     var fs = require("fs");
     var path = require("path");
     var Config = require("../lib/Config.js");
+    var normalizeHTML = require("./TestUtils.js").normalizeHTML;
     var ShrinkApp = require("../ShrinkApp.js");
 
-    var appConf = new Config(__dirname + '/app/app.json');
-    var appName = appConf.get("app-name");
-    var buildDir = appConf.get("output-path");
+    var appConf = new Config();
+    appConf.config(__dirname + '/app/app.json', function(err) {
+      if (err) {
+        console.log(err);
+      } else {
+        var appName = appConf.get("app-name");
+        var outputPath = appConf.getOutputPath();
 
-    var testCase1 = function() {
-      ShrinkApp.shrink(__dirname + '/app', function(err, arr) {
-        if (err) {
-          console.log(err);
-        } else {
-          var fail = false;
-          arr.forEach(function(file) {
-            if (file.indexOf('test-case-7') === -1) {
-              var buildPath = __dirname + '/' + buildDir;
-              var validFile = buildPath + '/test-case-7' + file.substring(buildPath.length);
-              var htmlTxt = fs.readFileSync(file, 'utf8');
-              var validHtmlTxt = fs.readFileSync(validFile, 'utf8');
-              var htmlTxt = htmlTxt.replace(new RegExp(appName + '_[0-9]+', 'g'), appName + '_##');
-              var validHtmlTxt = validHtmlTxt.replace(new RegExp(appName + '_[0-9]+', 'g'), appName + '_##');
-              if (htmlTxt !== validHtmlTxt) {
-                console.log(file);
-                fail = true;
+        var testCase1 = function() {
+          ShrinkApp.shrink(__dirname + '/app', function(err, arr) {
+            if (err) {
+              console.log(err);
+            } else {
+              var fail = false;
+              arr.forEach(function(file) {
+                if (file.indexOf('test-case-7') === -1) {
+                  var validFile = outputPath + '/test-case-7' + file.substring(outputPath.length);
+                  var htmlTxt = normalizeHTML(fs.readFileSync(file, 'utf8'), appName);
+                  var validHtmlTxt = normalizeHTML(fs.readFileSync(validFile, 'utf8'), appName);
+                  if (htmlTxt !== validHtmlTxt) {
+                    console.log(file);
+                    fail = true;
+                  }
+                }
+              });
+              if (fail) {
+                console.log("FAILED");
+              } else {
+                console.log("SUCCESS!");
+                callback();
               }
             }
           });
-          if (fail) {
-            console.log("FAILED");
-          } else {
-            console.log("SUCCESS!");
-            callback();
-          }
-        }
-      });
-    }();
+        }();
+      }
+    });
+
   }
 };
 module["exports"] = TestSuite;

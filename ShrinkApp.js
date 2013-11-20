@@ -67,10 +67,8 @@
 
   ShrinkApp.prototype.shrink = function(dirPath, onShrink) {
     var appConf = this.appConf;
-    var outputPath = appConf.get('output-path');
-    var tempDir = appConf.getTempDir();
+    var outputPath = appConf.getOutputPath();
     var buildDir = appConf.getBuildDir();
-    var force = appConf.force();
     fs.deleteDir(buildDir, delegate(this, function(err, deletedDir) {
       if (err) {
         onShrink(err);
@@ -87,21 +85,13 @@
                 if (err) {
                   onShrink(err);
                 } else {
-                  if (force) {
-                    fs.deleteDir(outputPath, function(err, delDir) {
-                      if (err) {
-                        onShrink(err);
-                      }
-                      fs.createDirs(outputPath, function(err, createdDir) {
-                        if (err) {
-                          onShrink(err);
-                        } else {
-                          fs.renameSync();
-                          onShrink(null, arr, buildDir);
-                        }
-                      });
-                    });
-                  }
+                  appConf.finalize(function(err) {
+                    if (err) {
+                      onShrink(err);
+                    } else {
+                      onShrink(null, arr, outputPath);
+                    }
+                  });
                 }
               });
             }
