@@ -93,7 +93,7 @@
                       arr.forEach(function(file, idx) {
                         arr[idx] = appConf.getOutputPath(file);
                       });
-                      onShrink(null, arr, outputPath);
+                      onShrink(null, arr, outputPath, appConf);
                     }
                   });
                 }
@@ -126,9 +126,11 @@
       conf = JSON.parse(fs.readFileSync(appConfPath, 'utf8'));
     }
     conf["force"] = overwrite;
-    if (!isAbsolute(dirPath)) {
-      conf["output-path"] = path.normalize(dirPath + '/' + conf["output-path"]);
+    var outputPath = conf["output-path"];
+    if (!isAbsolute(outputPath)) {
+      conf["output-path"] = path.normalize(dirPath + '/' + outputPath);
     }
+    console.log(conf["output-path"]);
     appConf.config(conf, function(err) {
       if (err) {
         onShrink(err);

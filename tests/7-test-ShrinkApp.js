@@ -6,15 +6,13 @@ var TestSuite = {
     var normalizeHTML = require("./TestUtils.js").normalizeHTML;
     var ShrinkApp = require("../ShrinkApp.js");
 
-    var appName = 'myApp';
-    var outputPath = '../build';
-
     var testCase1 = function() {
       console.log('Test Case #1');
-      ShrinkApp.shrink(__dirname + '/app', true, function(err, arr) {
+      ShrinkApp.shrink(__dirname + '/app', true, function(err, arr, outputPath, appConf) {
         if (err) {
           console.log(err);
         } else {
+          var appName = appConf.get('app-name');
           var fail = false;
           arr.forEach(function(file) {
             if (file.indexOf('test-case-7') === -1) {
