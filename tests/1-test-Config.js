@@ -13,7 +13,7 @@ var TestSuite = {
           console.log(err);
         } else {
           if (c.get('app-name') === 'myApp'
-            && c.get('output-path') === '../build'
+            && c.get('output-path') === 'build'
             && c.getFilter('html').toString() === 'ParseHTML'
             && c.getFilter('css').toString() === 'ShrinkCSS'
             && c.getFilter('less').toString() === 'CompileLESS'

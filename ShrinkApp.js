@@ -4,10 +4,8 @@
   }
 
   var fs = require('extendfs');
-  var path = require('path');
   var Config = require("./lib/Config.js");
   var delegate = require("./lib/Utils.js").delegate;
-  var isAbsolute = require("./lib/Utils.js").isAbsolute;
 
   var ShrinkApp = function(conf) {
     this.appConf = conf || new Config();
@@ -126,11 +124,7 @@
       conf = JSON.parse(fs.readFileSync(appConfPath, 'utf8'));
     }
     conf["force"] = overwrite;
-    var outputPath = conf["output-path"];
-    if (!isAbsolute(outputPath)) {
-      conf["output-path"] = path.normalize(dirPath + '/' + outputPath);
-    }
-    console.log(conf["output-path"]);
+    conf["dir-path"] = dirPath;
     appConf.config(conf, function(err) {
       if (err) {
         onShrink(err);
