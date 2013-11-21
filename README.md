@@ -61,7 +61,7 @@ First make sure you have installed the latest version of [node.js](http://nodejs
     npm install shrinkapp@windows
 ```
 
-From Git:
+### From Git:
 
 ```
     git clone git://github.com/4mgad/ShrinkApp.git
@@ -83,8 +83,8 @@ The available options are:
   -c, --create-app [app-name]
         Create a default app.json under the specified source directory.
 
-  -f, --force [app-name]
-        If app.json already exists overwrite it.
+  -f, --force
+        overwrite files.
 
   -v, --version
         Display package version.

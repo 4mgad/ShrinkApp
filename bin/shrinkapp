@@ -88,7 +88,7 @@ var parseSwitches = function(onParse) {
             case '--help':
               switchHandlers.push({
                 handler: function(callback) {
-                  var help = 'Usage\n-----\n\n    shrinkapp [source directory] [options]\n\nThe available options are:\n\n  -c, --create-app [app-name]\n        Create a default app.json under the specified source directory.\n\n  -f, --force [app-name]\n        If app.json already exists overwrite it.\n\n  -v, --version\n        Display package version.\n\n  -h, --help\n        Display help.';
+                  var help = fs.readFileSync(__dirname + '/help', 'utf8');
                   callback(help);
                 }
               });

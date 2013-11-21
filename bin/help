@@ -1,0 +1,25 @@
+
+
+Usage
+-----
+
+
+    shrinkapp [source directory] [options]
+
+
+The available options are:
+
+
+  -c, --create-app [app-name]
+        Create a default app.json under the specified source directory.
+
+  -f, --force
+        overwrite files.
+
+  -v, --version
+        Display package version.
+
+  -h, --help
+        Display help.
+
+
