@@ -26,10 +26,11 @@ var TestSuite = {
 
 
               var testCase1 = function() {
+                console.log('Test Case #1');
                 var validJsTxt = fs.readFileSync(buildDir + '/js/test-case-5-1.js', 'utf8');
                 shrinkJS.applyFilter(buildDir + '/js/app.js', function(err, minJSFiles) {
-                  console.log('Test Case #1');
                   if (err) {
+                    console.trace();
                     console.log(err);
                   } else {
                     var jsTxt = fs.readFileSync(minJSFiles[0], 'utf8');
@@ -45,6 +46,7 @@ var TestSuite = {
               }();
 
               var testCase2 = function() {
+                console.log('Test Case #2');
                 var validJsTxt = fs.readFileSync(buildDir + '/js/test-case-5-2.js', 'utf8');
                 shrinkJS.applyFilter([
                   buildDir + '/js/app.js',
@@ -53,7 +55,6 @@ var TestSuite = {
                   buildDir + '/js/filters.js',
                   buildDir + '/js/services.js'
                 ], function(err, minJSFiles) {
-                  console.log('Test Case #2');
                   if (err) {
                     console.log(err);
                   } else {
@@ -71,8 +72,8 @@ var TestSuite = {
 
 
               var testCase3 = function() {
+                console.log('Test Case #3');
                 shrinkJS.finalize(function(err, arr) {
-                  console.log('Test Case #3');
                   if (err) {
                     console.log(err);
                   } else {
