@@ -24,7 +24,7 @@ var shrinkApp = function() {
           console.log('  --> ' + outputPath);
           console.log('');
           console.log('');
-          console.log('The following files have been modified:');
+          console.log('The following files have been processed successfully!');
           console.log('');
           if (fileArr && fileArr.length) {
             fileArr.forEach(function(fileName) {
