@@ -10,7 +10,7 @@ Features
 4. [x] Shrinks css files using yuicompressor (https://github.com/yui/yuicompressor/)
 6. [x] Shrinks javascript files using UglifyJS (https://github.com/mishoo/UglifyJS2)
 7. [ ] Shrinks HTML files
-8. [ ] Shrinks the content of <style> and <script> tags
+8. [ ] Shrinks the content of \<style\> and \<script\> tags
 9. [x] Modifies HTML tags pointing to less/css and/or javascript files to point to the minified ones instead
 10. [x] Generates well formatted HTML code using js-beautify (https://github.com/einars/js-beautify)
 11. [x] Produces a build directory containing the shrunk application
