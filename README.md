@@ -4,14 +4,20 @@ ShrinkApp is a build utility for HTML5 applications (preferably single page appl
 Features
 ---------
 
-1. [x] Looks for html files and parses them using htmlparser2 (https://github.com/fb55/htmlparser2) to find script and link tags
+1. [x] Parses HTML files to find <link> and <script> tags using htmlparser2 (https://github.com/fb55/htmlparser2)
 2. [x] Compiles less files using less compiler (https://github.com/less/less.js)
-3. [ ] Compiles sass files (http://sass-lang.com/)
+3. [ ] Compiles sass files
 4. [x] Shrinks css files using yuicompressor (https://github.com/yui/yuicompressor/)
 6. [x] Shrinks javascript files using UglifyJS (https://github.com/mishoo/UglifyJS2)
-7. [x] Modifies HTML tags pointing to less/css and/or javascript files to point to the minified ones instead
-8. [x] Generates well formatted HTML code using js-beautify (https://github.com/einars/js-beautify)
-9. [x] Produces a build directory containing the shrunk application
+7. [ ] Shrinks HTML files
+8. [ ] Shrinks the content of <style> and <script> tags
+9. [x] Modifies HTML tags pointing to less/css and/or javascript files to point to the minified ones instead
+10. [x] Generates well formatted HTML code using js-beautify (https://github.com/einars/js-beautify)
+11. [x] Produces a build directory containing the shrunk application
+12. [ ] Displays shrink analysis
+
+[ ] In Progress
+[x] Completed
 
 
 Tested On
