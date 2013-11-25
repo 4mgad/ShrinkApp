@@ -1,15 +1,3 @@
-var TestSuite = {
-  run: function(callback) {
+var TestSuite = require("./TestSuite.js");
 
-    console.log('Testing Analysis.js');
-
-    var Analysis = require("../lib/Analysis.js");
-
-    var testCase1 = function() {
-      console.log('Test Case #1');
-      callback();
-    };
-
-  }
-};
-module["exports"] = TestSuite;
+module["exports"] = new TestSuite("Config.js", []);
