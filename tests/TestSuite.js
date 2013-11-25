@@ -34,4 +34,27 @@ TestSuite.prototype.run = function(callback) {
   };
   runTestCase(idx);
 };
+
+TestSuite.runAll = function(testSuites) {
+  var testSuites = testSuites || [];
+  var idx = 0;
+  var runTestSuite = function(idx) {
+    var testSuite = testSuites[idx];
+    if (testSuite) {
+      testSuite.run(function() {
+        runTestSuite(++idx);
+      });
+    } else {
+      console.log(" ");
+      console.log(" ");
+      if (idx === testSuites.length) {
+        console.log(formatMsg("ALL TEST SUITES:", 30) + "SUCCEEDED!!!");
+      } else {
+        console.log(formatMsg("SOME TEST SUITES:", 30) + "FAILED");
+      }
+    }
+  };
+  runTestSuite(idx);
+};
+
 module["exports"] = TestSuite;
