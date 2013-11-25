@@ -1,188 +1,173 @@
-var TestSuite = {
-  run: function(callback) {
-    console.log('Testing Utils.js');
+var TestSuite = require("./TestSuite.js");
 
-    var fs = require("fs");
-    var Utils = require("../lib/Utils.js");
+var fs = require("fs");
+var Utils = require("../lib/Utils.js");
 
-    var generateFiles = false;
+var generateFiles = false;
 
-    var testCase0 = function() {
-      console.log('Test Case #0');
-      if (Utils.isAbsolute('C:\\test\\test')
-        && !Utils.isAbsolute('test\\test')
-        && Utils.isAbsolute('/test/test')
-        && !Utils.isAbsolute('test/test')
-        && !Utils.isAbsolute('.\\test')
-        && !Utils.isAbsolute('./test')
-        && !Utils.isAbsolute('..\\test')
-        && !Utils.isAbsolute('../test')
-        ) {
-        console.log('SUCCESS!');
+var utilsTS = new TestSuite("Utils.js", [
+  //0
+  function(callback) {
+    if (Utils.isAbsolute('C:\\test\\test')
+      && !Utils.isAbsolute('test\\test')
+      && Utils.isAbsolute('/test/test')
+      && !Utils.isAbsolute('test/test')
+      && !Utils.isAbsolute('.\\test')
+      && !Utils.isAbsolute('./test')
+      && !Utils.isAbsolute('..\\test')
+      && !Utils.isAbsolute('../test')
+      ) {
+      callback();
+    } else {
+      callback('FAILED');
+    }
+  },
+  //1
+  function(callback) {
+    Utils.less(__dirname + '/app/css/styles.less', function(err, cssTxt) {
+      if (err) {
+        callback(err);
       } else {
-        console.log('FAILED');
+        if (generateFiles) {
+          fs.writeFileSync(__dirname + '/app/css/test-case-2-1.css', cssTxt);
+          callback();
+          return;
+        }
+        var validCssTxt = fs.readFileSync(__dirname + '/app/css/test-case-2-1.css', 'utf8');
+        if (cssTxt === validCssTxt) {
+          callback();
+        } else {
+          console.log("cssTxt: " + cssTxt);
+          console.log("validCssTxt: " + validCssTxt);
+          callback('FAILED');
+        }
       }
-    }();
-
-    var testCase1 = function() {
-      console.log('Test Case #1');
-      Utils.less(__dirname + '/app/css/styles.less', function(err, cssTxt) {
-        if (err) {
-          console.log(err);
-        } else {
-          if (generateFiles) {
-            fs.writeFileSync(__dirname + '/app/css/test-case-2-1.css', cssTxt);
-            testCase2();
-            return;
-          }
-          var validCssTxt = fs.readFileSync(__dirname + '/app/css/test-case-2-1.css', 'utf8');
-          if (cssTxt === validCssTxt) {
-            console.log('SUCCESS!');
-            testCase2();
-          } else {
-            console.log("cssTxt: " + cssTxt);
-            console.log("validCssTxt: " + validCssTxt);
-            console.log('FAILED');
-          }
+    });
+  },
+  //2
+  function(callback) {
+    Utils.less([
+      __dirname + '/app/css/styles.less',
+      __dirname + '/app/css/styles_1.less'
+    ], function(err, cssTxt) {
+      if (err) {
+        callback(err);
+      } else {
+        if (generateFiles) {
+          fs.writeFileSync(__dirname + '/app/css/test-case-2-2.css', cssTxt);
+          callback();
+          return;
         }
-      });
-    }();
-
-    var testCase2 = function() {
-      console.log('Test Case #2');
-      Utils.less([
-        __dirname + '/app/css/styles.less',
-        __dirname + '/app/css/styles_1.less'
-      ], function(err, cssTxt) {
-        if (err) {
-          console.log(err);
+        var validCssTxt = fs.readFileSync(__dirname + '/app/css/test-case-2-2.css', 'utf8');
+        if (cssTxt === validCssTxt) {
+          callback();
         } else {
-          if (generateFiles) {
-            fs.writeFileSync(__dirname + '/app/css/test-case-2-2.css', cssTxt);
-            testCase3();
-            return;
-          }
-          var validCssTxt = fs.readFileSync(__dirname + '/app/css/test-case-2-2.css', 'utf8');
-          if (cssTxt === validCssTxt) {
-            console.log('SUCCESS!');
-            testCase3();
-          } else {
-            console.log("cssTxt: " + cssTxt);
-            console.log("validCssTxt: " + validCssTxt);
-            console.log('FAILED');
-          }
+          console.log("cssTxt: " + cssTxt);
+          console.log("validCssTxt: " + validCssTxt);
+          callback('FAILED');
         }
-      });
-    };
-
-    var testCase3 = function() {
-      console.log('Test Case #3');
-      Utils.shrinkCSS(__dirname + '/app/css/styles_2.css', function(err, cssTxt) {
-        if (err) {
-          console.log(err);
+      }
+    });
+  },
+  //3
+  function(callback) {
+    Utils.shrinkCSS(__dirname + '/app/css/styles_2.css', function(err, cssTxt) {
+      if (err) {
+        callback(err);
+      } else {
+        if (generateFiles) {
+          fs.writeFileSync(__dirname + '/app/css/test-case-2-3.css', cssTxt);
+          callback();
+          return;
+        }
+        var validCssTxt = fs.readFileSync(__dirname + '/app/css/test-case-2-3.css', 'utf8');
+        if (cssTxt === validCssTxt) {
+          callback();
         } else {
-          if (generateFiles) {
-            fs.writeFileSync(__dirname + '/app/css/test-case-2-3.css', cssTxt);
-            testCase4();
-            return;
-          }
-          var validCssTxt = fs.readFileSync(__dirname + '/app/css/test-case-2-3.css', 'utf8');
-          if (cssTxt === validCssTxt) {
-            console.log('SUCCESS!');
-            testCase4();
-          } else {
-            console.log("cssTxt: " + cssTxt);
-            console.log("validCssTxt: " + validCssTxt);
-            console.log('FAILED');
-          }
+          console.log("cssTxt: " + cssTxt);
+          console.log("validCssTxt: " + validCssTxt);
+          callback('FAILED');
         }
-      });
-    };
-
-    var testCase4 = function() {
-      console.log('Test Case #4');
-      Utils.shrinkCSS([
-        __dirname + '/app/css/styles.css',
-        __dirname + '/app/css/styles_2.css',
-        __dirname + '/app/css/styles_3.css'
-      ], function(err, cssTxt) {
-        if (err) {
-          console.log(err);
+      }
+    });
+  },
+  //4
+  function(callback) {
+    Utils.shrinkCSS([
+      __dirname + '/app/css/styles.css',
+      __dirname + '/app/css/styles_2.css',
+      __dirname + '/app/css/styles_3.css'
+    ], function(err, cssTxt) {
+      if (err) {
+        callback(err);
+      } else {
+        if (generateFiles) {
+          fs.writeFileSync(__dirname + '/app/css/test-case-2-4.css', cssTxt);
+          callback();
+          return;
+        }
+        var validCssTxt = fs.readFileSync(__dirname + '/app/css/test-case-2-4.css', 'utf8');
+        if (cssTxt === validCssTxt) {
+          callback();
         } else {
-          if (generateFiles) {
-            fs.writeFileSync(__dirname + '/app/css/test-case-2-4.css', cssTxt);
-            testCase5();
-            return;
-          }
-          var validCssTxt = fs.readFileSync(__dirname + '/app/css/test-case-2-4.css', 'utf8');
-          if (cssTxt === validCssTxt) {
-            console.log('SUCCESS!');
-            testCase5();
-          } else {
-            console.log("cssTxt: " + cssTxt);
-            console.log("validCssTxt: " + validCssTxt);
-            console.log('FAILED');
-          }
+          console.log("cssTxt: " + cssTxt);
+          console.log("validCssTxt: " + validCssTxt);
+          callback('FAILED');
         }
-      });
-    };
-
-    var testCase5 = function() {
-      console.log('Test Case #5');
-      Utils.shrinkJS(__dirname + '/app/js/app.js', function(err, jsTxt) {
-        if (err) {
-          console.log(err);
+      }
+    });
+  },
+  //5
+  function(callback) {
+    Utils.shrinkJS(__dirname + '/app/js/app.js', function(err, jsTxt) {
+      if (err) {
+        callback(err);
+      } else {
+        if (generateFiles) {
+          fs.writeFileSync(__dirname + '/app/js/test-case-2-5.js', jsTxt);
+          callback();
+          return;
+        }
+        var validJSTxt = fs.readFileSync(__dirname + '/app/js/test-case-2-5.js', 'utf8');
+        if (jsTxt === validJSTxt) {
+          callback();
         } else {
-          if (generateFiles) {
-            fs.writeFileSync(__dirname + '/app/js/test-case-2-5.js', jsTxt);
-            testCase8();
-            return;
-          }
-          var validJSTxt = fs.readFileSync(__dirname + '/app/js/test-case-2-5.js', 'utf8');
-          if (jsTxt === validJSTxt) {
-            console.log('SUCCESS!');
-            testCase6();
-          } else {
-            console.log("jsTxt: " + jsTxt);
-            console.log("validCssTxt: " + validJSTxt);
-            console.log('FAILED');
-          }
+          console.log("jsTxt: " + jsTxt);
+          console.log("validCssTxt: " + validJSTxt);
+          callback('FAILED');
         }
-      });
-    };
-
-    var testCase6 = function() {
-      console.log('Test Case #6');
-      Utils.shrinkJS([
-        __dirname + '/app/js/app.js',
-        __dirname + '/app/js/controllers.js',
-        __dirname + '/app/js/directives.js',
-        __dirname + '/app/js/filters.js',
-        __dirname + '/app/js/services.js'
-      ], function(err, jsTxt) {
-        if (err) {
-          console.log(err);
+      }
+    });
+  },
+  //6
+  function(callback) {
+    Utils.shrinkJS([
+      __dirname + '/app/js/app.js',
+      __dirname + '/app/js/controllers.js',
+      __dirname + '/app/js/directives.js',
+      __dirname + '/app/js/filters.js',
+      __dirname + '/app/js/services.js'
+    ], function(err, jsTxt) {
+      if (err) {
+        callback(err);
+      } else {
+        if (generateFiles) {
+          fs.writeFileSync(__dirname + '/app/js/test-case-2-6.js', jsTxt);
+          callback();
+          return;
+        }
+        var validJSTxt = fs.readFileSync(__dirname + '/app/js/test-case-2-6.js', 'utf8');
+        if (jsTxt === validJSTxt) {
+          callback();
         } else {
-          if (generateFiles) {
-            fs.writeFileSync(__dirname + '/app/js/test-case-2-6.js', jsTxt);
-            callback();
-            return;
-          }
-          var validJSTxt = fs.readFileSync(__dirname + '/app/js/test-case-2-6.js', 'utf8');
-          if (jsTxt === validJSTxt) {
-            console.log('SUCCESS!');
-            callback();
-          } else {
-            console.log("jsTxt: " + jsTxt);
-            console.log("validCssTxt: " + validJSTxt);
-            console.log('FAILED');
-          }
+          console.log("jsTxt: " + jsTxt);
+          console.log("validCssTxt: " + validJSTxt);
+          callback('FAILED');
         }
-      });
-    };
-
-
-
+      }
+    });
   }
-};
-module["exports"] = TestSuite;
+
+]);
+
+module["exports"] = utilsTS;

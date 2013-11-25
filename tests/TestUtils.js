@@ -8,6 +8,12 @@
     return {
       normalizeHTML: function(html, appName) {
         return html.replace(new RegExp(appName + '_[0-9]+', 'g'), appName + '_##');
+      },
+      formatMsg: function(msg, size) {
+        var formattedMsg = new Array(size);
+        formattedMsg = formattedMsg.join(' ');
+        formattedMsg = msg + formattedMsg.substr(msg.length);
+        return formattedMsg;
       }
     };
   })();
