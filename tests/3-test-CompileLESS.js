@@ -6,7 +6,7 @@ var CompileLESS = require("../lib/filters/CompileLESS.js");
 
 var g = {};
 
-var compileLESSTS = new TestSuite("CompileLESS.js", [
+module["exports"] = new TestSuite("CompileLESS.js", [
   //0
   function(callback) {
     var appConf = new Config();
@@ -109,5 +109,3 @@ var compileLESSTS = new TestSuite("CompileLESS.js", [
   }
 
 ]);
-
-module["exports"] = compileLESSTS;

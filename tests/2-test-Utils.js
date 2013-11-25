@@ -5,7 +5,7 @@ var Utils = require("../lib/Utils.js");
 
 var generateFiles = false;
 
-var utilsTS = new TestSuite("Utils.js", [
+module["exports"] = new TestSuite("Utils.js", [
   //0
   function(callback) {
     if (Utils.isAbsolute('C:\\test\\test')
@@ -169,5 +169,3 @@ var utilsTS = new TestSuite("Utils.js", [
   }
 
 ]);
-
-module["exports"] = utilsTS;

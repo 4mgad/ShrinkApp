@@ -2,7 +2,7 @@ var TestSuite = require("./TestSuite.js");
 
 var Config = require("../lib/Config.js");
 
-var configTS = new TestSuite("Config.js", [
+module["exports"] = new TestSuite("Config.js", [
   //0
   function(callback) {
     var c = new Config();
@@ -178,7 +178,5 @@ var configTS = new TestSuite("Config.js", [
       }
     });
   }
-  
-]);
 
-module["exports"] = configTS;
+]);

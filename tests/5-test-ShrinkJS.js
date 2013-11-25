@@ -6,7 +6,7 @@ var ShrinkJS = require("../lib/filters/ShrinkJS.js");
 
 var g = {};
 
-var shrinkJSTS = new TestSuite("ShrinkJS.js", [
+module["exports"] = new TestSuite("ShrinkJS.js", [
   //0
   function(callback) {
     var appConf = new Config();
@@ -96,5 +96,3 @@ var shrinkJSTS = new TestSuite("ShrinkJS.js", [
   }
 
 ]);
-
-module["exports"] = shrinkJSTS;

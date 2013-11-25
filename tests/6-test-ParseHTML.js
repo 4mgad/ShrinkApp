@@ -30,6 +30,7 @@ module["exports"] = new TestSuite("ParseHTML.js", [
       }
     });
   },
+  //1
   function(callback) {
     var buildDir = g.buildDir;
     var parseHTML = g.parseHTML;
@@ -48,6 +49,7 @@ module["exports"] = new TestSuite("ParseHTML.js", [
       }
     });
   },
+  //2
   function(callback) {
     var buildDir = g.buildDir;
     var parseHTML = g.parseHTML;
@@ -66,6 +68,7 @@ module["exports"] = new TestSuite("ParseHTML.js", [
       }
     });
   },
+  //3
   function(callback) {
     var buildDir = g.buildDir;
     var parseHTML = g.parseHTML;
