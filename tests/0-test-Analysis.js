@@ -73,6 +73,7 @@ module["exports"] = new TestSuite("Analysis.js", [
     if (actualOutput === expectedOutput) {
       callback();
     } else {
+      fs.writeFileSync(__dirname + '/app/js/test-case-0-3.FAILED.txt', actualOutput, 'utf8');
       callback('FAILED');
     }
   },

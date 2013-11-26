@@ -6,9 +6,9 @@ Original Files:
    ---> C:\projects\nodejs\ShrinkApp\tests/app/js/controllers.js
    ---> C:\projects\nodejs\ShrinkApp\tests/app/js/filters.js
 
+
 Minified Files:
 ===============
-
 
    ---> C:\projects\nodejs\ShrinkApp\tests/app/js/test-case-0-1.js
    ---> C:\projects\nodejs\ShrinkApp\tests/app/js/test-case-0-2.js
