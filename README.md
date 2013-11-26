@@ -14,7 +14,7 @@ Features
 - [x] Modifies HTML tags pointing to less/css and/or javascript files to point to the minified ones instead
 - [x] Generates well formatted HTML code using js-beautify (https://github.com/einars/js-beautify)
 - [x] Produces a build directory containing the shrunk application
-- [ ] Displays shrinkapp analysis
+- [x] Displays shrinkapp analysis
 
 
 Tested On
@@ -31,7 +31,7 @@ Tested On
 
 
 Install
--------
+--------
 
 First make sure you have installed the latest version of [node.js](http://nodejs.org/)
 (You may need to restart your computer after this step).
@@ -88,6 +88,9 @@ The available options are:
 
   -f, --force
         overwrite files.
+
+  -a, --analysis
+        Display analysis data after shrink.
 
   -v, --version
         Display package version.

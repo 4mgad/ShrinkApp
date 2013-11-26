@@ -9,6 +9,7 @@ var ShrinkApp = require(__dirname + '/../ShrinkApp.js');
 
 var dirPath = '';
 var force = false;
+var displayAnalysis = false;
 
 var shrinkApp = function() {
   if (dirPath && fs.existsSync(dirPath)) {
@@ -19,7 +20,9 @@ var shrinkApp = function() {
         if (err) {
           console.log(err);
         } else {
-          console.log(appConf.analysis.getReport().toString());
+          if (displayAnalysis) {
+            console.log(appConf.analysis.getReport().toString());
+          }
           console.log(underlineMsg('The following directory has been generated successfully!'));
           console.log('');
           console.log('  --> ' + outputPath);
@@ -99,6 +102,15 @@ var parseSwitches = function(onParse) {
               switchHandlers.push({
                 handler: function(callback) {
                   force = true;
+                  callback();
+                }
+              });
+              break;
+            case '-a':
+            case '--analysis':
+              switchHandlers.push({
+                handler: function(callback) {
+                  displayAnalysis = true;
                   callback();
                 }
               });

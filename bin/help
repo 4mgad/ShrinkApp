@@ -16,6 +16,9 @@ The available options are:
   -f, --force
         overwrite files.
 
+  -a, --analysis
+        Display analysis data after shrink.
+
   -v, --version
         Display package version.
 
