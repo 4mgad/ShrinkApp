@@ -16,8 +16,7 @@ TestSuite.prototype.run = function(callback) {
     if (testCase) {
       testCase(function(err) {
         if (err) {
-          console.log(err);
-          console.log(formatMsg('Test Case #' + idx + ':', 30) + 'FAILED');
+          console.log(formatMsg('Test Case #' + idx + ':', 30) + 'FAILED ---> ' + err);
         } else {
           console.log(formatMsg('Test Case #' + idx + ':', 30) + 'SUCCEEDED!');
           runTestCase(++idx);
