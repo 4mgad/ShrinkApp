@@ -1,6 +1,6 @@
 var TestSuite = require("./TestSuite.js");
 TestSuite.runAll([
-//  require('./1-test-Analysis.js'),
+  require('./0-test-Analysis.js'),
   require('./1-test-Config.js'),
   require('./2-test-Utils.js'),
   require('./3-test-CompileLESS.js'),
