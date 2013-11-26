@@ -22,8 +22,8 @@ Shrunk To:
    ---> C:\projects\nodejs\ShrinkApp\tests/app/js/test-case-0-2.js
 
 
-Total Number Of Characters:
-===========================
+Analysis (Total Number Of Characters):
+======================================
 
    --------------\
     BEFORE Shrink >  614
