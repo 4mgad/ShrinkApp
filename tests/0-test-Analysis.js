@@ -11,7 +11,7 @@ module["exports"] = new TestSuite("Analysis.js", [
       __dirname + '/app/js/directives.js'
     ];
     var minFile = __dirname + '/app/js/test-case-0-1.js';
-    analysis.addReport('report#1', fileArr, minFile);
+    analysis.addReport(fileArr, minFile, 'report#1');
     if (analysis.getReport('report#1').ratio === 61) {
       callback();
     } else {
@@ -26,7 +26,7 @@ module["exports"] = new TestSuite("Analysis.js", [
       __dirname + '/app/js/filters.js'
     ];
     var minFile = __dirname + '/app/js/test-case-0-2.js';
-    analysis.addReport('report#2', fileArr, minFile);
+    analysis.addReport(fileArr, minFile, 'report#2');
     if (analysis.getReport('report#2').ratio === 68) {
       callback();
     } else {
@@ -40,14 +40,14 @@ module["exports"] = new TestSuite("Analysis.js", [
       __dirname + '/app/js/directives.js'
     ];
     var minFile = __dirname + '/app/js/test-case-0-1.js';
-    analysis.addReport('report#1', fileArr, minFile);
+    analysis.addReport(fileArr, minFile);
     var fileArr = [
       __dirname + '/app/js/controllers.js',
       __dirname + '/app/js/filters.js'
     ];
     var minFile = __dirname + '/app/js/test-case-0-2.js';
-    analysis.addReport('report#2', fileArr, minFile);
-    if (analysis.getReport('report#1').ratio === 61 && analysis.getReport('report#2').ratio === 68 && analysis.getGlobalReport().ratio === 65) {
+    analysis.addReport(fileArr, minFile);
+    if (analysis.getReport().ratio === 65) {
       callback();
     } else {
       callback('FAILED');
@@ -60,16 +60,16 @@ module["exports"] = new TestSuite("Analysis.js", [
       __dirname + '/app/js/directives.js'
     ];
     var minFile = __dirname + '/app/js/test-case-0-1.js';
-    analysis.addReport('report#1', fileArr, minFile);
+    analysis.addReport(fileArr, minFile);
     var fileArr = [
       __dirname + '/app/js/controllers.js',
       __dirname + '/app/js/filters.js'
     ];
     var minFile = __dirname + '/app/js/test-case-0-2.js';
-    analysis.addReport('report#2', fileArr, minFile);
+    analysis.addReport(fileArr, minFile);
 
     var expectedOutput = fs.readFileSync(__dirname + '/app/js/test-case-0-3.txt', 'utf8');
-    var actualOutput = analysis.getGlobalReport().toString();
+    var actualOutput = analysis.getReport().toString();
     if (actualOutput === expectedOutput) {
       callback();
     } else {

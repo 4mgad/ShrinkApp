@@ -14,10 +14,11 @@ var shrinkApp = function() {
     //start the shrink process
     var appConfig = dirPath + '/app.json';
     if (fs.existsSync(appConfig)) {
-      ShrinkApp.shrink(dirPath, force, function(err, fileArr, outputPath) {
+      ShrinkApp.shrink(dirPath, force, function(err, fileArr, outputPath, appConf) {
         if (err) {
           console.log(err);
         } else {
+          console.log(appConf.analysis.getReport().toString());
           console.log('');
           console.log('The following directory has been generated successfully!');
           console.log('');
