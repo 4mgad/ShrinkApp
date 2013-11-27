@@ -4,18 +4,16 @@ var fs = require("extendfs");
 var Config = require("../lib/Config.js");
 var ShrinkCSS = require("../lib/filters/ShrinkCSS.js");
 
-var g = {};
+var appConf = new Config();
 
 module["exports"] = new TestSuite("ShrinkCSS.js", [
   //0
   function(callback) {
-    var appConf = new Config();
     appConf.config(function(err) {
       if (err) {
         callback(err);
       } else {
-        var buildDir = g.buildDir = appConf.getBuildDir();
-        g.shrinkCSS = new ShrinkCSS.getInstance(appConf);
+        var buildDir = appConf.getBuildDir();
         fs.deleteDir(buildDir, function(err, dir) {
           fs.copyDir(__dirname + '/app', buildDir, function(err, src, dest) {
             if (err) {
@@ -30,9 +28,8 @@ module["exports"] = new TestSuite("ShrinkCSS.js", [
   },
   //1
   function(callback) {
-    var buildDir = g.buildDir;
-    var shrinkCSS = g.shrinkCSS;
-
+    var buildDir = appConf.getBuildDir();
+    var shrinkCSS = ShrinkCSS.getInstance(appConf);
     shrinkCSS.applyFilter(buildDir + '/css/styles_2.css', function(err, minCSSFiles) {
       if (err) {
         callback(err);
@@ -58,8 +55,8 @@ module["exports"] = new TestSuite("ShrinkCSS.js", [
   },
   //2
   function(callback) {
-    var buildDir = g.buildDir;
-    var shrinkCSS = g.shrinkCSS;
+    var buildDir = appConf.getBuildDir();
+    var shrinkCSS = ShrinkCSS.getInstance(appConf);
     shrinkCSS.applyFilter([
       buildDir + '/css/styles.css',
       buildDir + '/css/styles_2.css',
@@ -89,7 +86,7 @@ module["exports"] = new TestSuite("ShrinkCSS.js", [
   },
   //3
   function(callback) {
-    var shrinkCSS = g.shrinkCSS;
+    var shrinkCSS = ShrinkCSS.getInstance(appConf);
     shrinkCSS.finalize(function(err, arr) {
       if (err) {
         callback(err);

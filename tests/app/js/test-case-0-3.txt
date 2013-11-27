@@ -2,24 +2,24 @@
 File Set:
 =========
 
-   ---> C:\projects\nodejs\ShrinkApp\tests/app/js/directives.js
+   ---> build/js/directives.js
 
 Shrunk To:
 ==========
 
-   ---> C:\projects\nodejs\ShrinkApp\tests/app/js/test-case-0-1.js
+   ---> build/js/test-case-0-1.js
 
 
 File Set:
 =========
 
-   ---> C:\projects\nodejs\ShrinkApp\tests/app/js/controllers.js
-   ---> C:\projects\nodejs\ShrinkApp\tests/app/js/filters.js
+   ---> build/js/controllers.js
+   ---> build/js/filters.js
 
 Shrunk To:
 ==========
 
-   ---> C:\projects\nodejs\ShrinkApp\tests/app/js/test-case-0-2.js
+   ---> build/js/test-case-0-2.js
 
 
 Analysis (Total Number Of Characters):

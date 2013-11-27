@@ -5,19 +5,16 @@ var Config = require("../lib/Config.js");
 var normalizeHTML = require("./TestUtils.js").normalizeHTML;
 var ParseHTML = require("../lib/filters/ParseHTML.js");
 
-var g = {};
+var appConf = new Config();
 
 module["exports"] = new TestSuite("ParseHTML.js", [
   //0
   function(callback) {
-    var appConf = new Config();
     appConf.config(function(err) {
       if (err) {
         callback(err);
       } else {
-        var buildDir = g.buildDir = appConf.getBuildDir();
-        g.parseHTML = new ParseHTML.getInstance(appConf);
-        g.appName = appConf.get("app-name");
+        var buildDir = appConf.getBuildDir();
         fs.deleteDir(buildDir, function(err, dir) {
           fs.copyDir(__dirname + '/app', buildDir, function(err, src, dest) {
             if (err) {
@@ -32,9 +29,9 @@ module["exports"] = new TestSuite("ParseHTML.js", [
   },
   //1
   function(callback) {
-    var buildDir = g.buildDir;
-    var parseHTML = g.parseHTML;
-    var appName = g.appName;
+    var buildDir = appConf.getBuildDir();
+    var parseHTML = ParseHTML.getInstance(appConf);
+    var appName = appConf.get("app-name");
     parseHTML.applyFilter(buildDir + '/index_3.html', function(err, htmlArr) {
       if (err) {
         callback(err);
@@ -51,9 +48,9 @@ module["exports"] = new TestSuite("ParseHTML.js", [
   },
   //2
   function(callback) {
-    var buildDir = g.buildDir;
-    var parseHTML = g.parseHTML;
-    var appName = g.appName;
+    var buildDir = appConf.getBuildDir();
+    var parseHTML = ParseHTML.getInstance(appConf);
+    var appName = appConf.get("app-name");
     parseHTML.applyFilter(buildDir + '/index_1.html', function(err, htmlArr) {
       if (err) {
         callback(err);
@@ -70,9 +67,9 @@ module["exports"] = new TestSuite("ParseHTML.js", [
   },
   //3
   function(callback) {
-    var buildDir = g.buildDir;
-    var parseHTML = g.parseHTML;
-    var appName = g.appName;
+    var buildDir = appConf.getBuildDir();
+    var parseHTML = ParseHTML.getInstance(appConf);
+    var appName = appConf.get("app-name");
     parseHTML.applyFilter([
       buildDir + '/index.html',
       buildDir + '/index_1.html',

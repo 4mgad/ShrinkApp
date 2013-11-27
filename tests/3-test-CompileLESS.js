@@ -4,18 +4,16 @@ var fs = require("extendfs");
 var Config = require("../lib/Config.js");
 var CompileLESS = require("../lib/filters/CompileLESS.js");
 
-var g = {};
+var appConf = new Config();
 
 module["exports"] = new TestSuite("CompileLESS.js", [
   //0
   function(callback) {
-    var appConf = new Config();
     appConf.config(function(err) {
       if (err) {
         callback(err);
       } else {
-        var buildDir = g.buildDir = appConf.getBuildDir();
-        g.compileLESS = new CompileLESS.getInstance(appConf);
+        var buildDir = appConf.getBuildDir();
         fs.deleteDir(buildDir, function(err, dir) {
           fs.copyDir(__dirname + '/app', buildDir, function(err, src, dest) {
             if (err) {
@@ -30,8 +28,8 @@ module["exports"] = new TestSuite("CompileLESS.js", [
   },
   //1
   function(callback) {
-    var buildDir = g.buildDir;
-    var compileLESS = g.compileLESS;
+    var buildDir = appConf.getBuildDir();
+    var compileLESS = CompileLESS.getInstance(appConf);
     compileLESS.applyFilter(buildDir + '/css/styles.less', function(err, cssArr) {
       if (err) {
         callback(err);
@@ -55,8 +53,8 @@ module["exports"] = new TestSuite("CompileLESS.js", [
   },
   //2
   function(callback) {
-    var buildDir = g.buildDir;
-    var compileLESS = g.compileLESS;
+    var buildDir = appConf.getBuildDir();
+    var compileLESS = CompileLESS.getInstance(appConf);
     compileLESS.applyFilter([
       buildDir + '/css/styles_1.less',
       buildDir + '/css/styles_2.less'
@@ -87,7 +85,7 @@ module["exports"] = new TestSuite("CompileLESS.js", [
   },
   //3
   function(callback) {
-    var compileLESS = g.compileLESS;
+    var compileLESS = CompileLESS.getInstance(appConf);
     compileLESS.finalize(function(err, arr) {
       if (err) {
         callback(err);

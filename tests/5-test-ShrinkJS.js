@@ -4,18 +4,16 @@ var fs = require("extendfs");
 var Config = require("../lib/Config.js");
 var ShrinkJS = require("../lib/filters/ShrinkJS.js");
 
-var g = {};
+var appConf = new Config();
 
 module["exports"] = new TestSuite("ShrinkJS.js", [
   //0
   function(callback) {
-    var appConf = new Config();
     appConf.config(function(err) {
       if (err) {
         callback(err);
       } else {
-        var buildDir = g.buildDir = appConf.getBuildDir();
-        g.shrinkJS = new ShrinkJS.getInstance(appConf);
+        var buildDir = appConf.getBuildDir();
         fs.deleteDir(buildDir, function(err, dir) {
           fs.copyDir(__dirname + '/app', buildDir, function(err, src, dest) {
             if (err) {
@@ -30,8 +28,8 @@ module["exports"] = new TestSuite("ShrinkJS.js", [
   },
   //1
   function(callback) {
-    var buildDir = g.buildDir;
-    var shrinkJS = g.shrinkJS;
+    var buildDir = appConf.getBuildDir();
+    var shrinkJS = ShrinkJS.getInstance(appConf);
     var validJsTxt = fs.readFileSync(buildDir + '/js/test-case-5-1.js', 'utf8');
     shrinkJS.applyFilter(buildDir + '/js/app.js', function(err, minJSFiles) {
       if (err) {
@@ -49,8 +47,8 @@ module["exports"] = new TestSuite("ShrinkJS.js", [
   },
   //2
   function(callback) {
-    var buildDir = g.buildDir;
-    var shrinkJS = g.shrinkJS;
+    var buildDir = appConf.getBuildDir();
+    var shrinkJS = ShrinkJS.getInstance(appConf);
     var validJsTxt = fs.readFileSync(buildDir + '/js/test-case-5-2.js', 'utf8');
     shrinkJS.applyFilter([
       buildDir + '/js/app.js',
@@ -74,7 +72,7 @@ module["exports"] = new TestSuite("ShrinkJS.js", [
   },
   //3
   function(callback) {
-    var shrinkJS = g.shrinkJS;
+    var shrinkJS = ShrinkJS.getInstance(appConf);
     shrinkJS.finalize(function(err, arr) {
       if (err) {
         callback(err);
