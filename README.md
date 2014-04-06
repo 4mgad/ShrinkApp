@@ -4,30 +4,27 @@ ShrinkApp is a build utility for HTML5 applications (preferably single page appl
 Features
 ---------
 
-- [x] Parses HTML files to find *link* and *script* tags using htmlparser2 (https://github.com/fb55/htmlparser2)
-- [x] Compiles less files using less compiler (https://github.com/less/less.js)
-- [ ] Compiles sass files
-- [x] Shrinks css files using yuicompressor (https://github.com/yui/yuicompressor/)
-- [x] Shrinks javascript files using UglifyJS (https://github.com/mishoo/UglifyJS2)
-- [ ] Shrinks HTML files
-- [ ] Shrinks the content of *style* and *script* tags
-- [x] Modifies HTML tags pointing to less/css and/or javascript files to point to the minified ones instead
-- [x] Generates well formatted HTML code using js-beautify (https://github.com/einars/js-beautify)
-- [x] Produces a build directory containing the shrunk application
-- [x] Displays shrinkapp analysis
+- Parses HTML files to find *link* and *script* tags using htmlparser2 (https://github.com/fb55/htmlparser2)
+- Compiles less files using less compiler (https://github.com/less/less.js)
+- Shrinks css files using yuicompressor (https://github.com/yui/yuicompressor/)
+- Shrinks javascript files using UglifyJS (https://github.com/mishoo/UglifyJS2)
+- Modifies HTML tags pointing to less/css and/or javascript files to point to the minified ones instead
+- Generates well formatted HTML code using js-beautify (https://github.com/einars/js-beautify)
+- Produces a build directory containing the shrunk application
+- Displays shrinkapp analysis
 
 
 Tested On
 ----------
 
-- [x] AngularJS's seed application (https://github.com/angular/angular-seed)
-- [x] Bootstrap template from initializr.com
-- [x] Classic template from initializr.com
-- [x] Responsive template from initializr.com
-- [x] Bootstrap template from initializr.com
-- [x] HTML5 Boilerplate template from html5boilerplate.com. Version: 4.2.0
-- [x] Mobile Boilerplate template from html5boilerplate.com/mobile. Version: 4.1
-- [x] Twitter Bootstrap template from getbootstrap.com/2.3.2
+- AngularJS's seed application (https://github.com/angular/angular-seed)
+- Bootstrap template from initializr.com
+- Classic template from initializr.com
+- Responsive template from initializr.com
+- Bootstrap template from initializr.com
+- HTML5 Boilerplate template from html5boilerplate.com. Version: 4.2.0
+- Mobile Boilerplate template from html5boilerplate.com/mobile. Version: 4.1
+- Twitter Bootstrap template from getbootstrap.com/2.3.2
 
 
 Install
